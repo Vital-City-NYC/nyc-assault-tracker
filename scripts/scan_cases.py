@@ -401,6 +401,13 @@ def main() -> int:
         added += 1
         print(f"  + {entry['date']} {entry['borough']} — {entry['name']}")
 
+    # If nothing new, don't rewrite the file — avoids noisy weekly "0 cases" commits.
+    # last_scan_date advances only when the file is actually updated; the cutoff logic
+    # will still look back far enough because DEFAULT_LOOKBACK_DAYS gives a floor.
+    if added == 0:
+        print(f"Done. No new cases. Total still {len(cases)}.")
+        return 0
+
     # Sort chronologically, then renumber
     cases.sort(key=lambda c: (c["date"], c["name"]))
     for i, c in enumerate(cases, start=1):
@@ -408,8 +415,7 @@ def main() -> int:
 
     data["cases"] = cases
     data["last_scan_date"] = date.today().isoformat()
-    if added:
-        data["last_updated"] = date.today().isoformat()
+    data["last_updated"] = date.today().isoformat()
 
     save_cases(data)
     print(f"Done. {added} new case(s) appended. Total now {len(cases)}.")
