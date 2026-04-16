@@ -318,7 +318,22 @@ footer {
 }
 
 /* Map */
-#precinctMap { height: 560px; width: 100%; background: var(--vc-white); border: 1px solid var(--vc-cloud); }
+#precinctMap { height: 560px; width: 100%; background: var(--vc-white); border: 1px solid var(--vc-cloud); position: relative; }
+.loading-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--vc-white);
+  color: var(--vc-slate); font-size: 13px; font-weight: 300;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+.loading-overlay::before {
+  content: ''; width: 14px; height: 14px; margin-right: 10px;
+  border: 2px solid var(--vc-cloud); border-top-color: var(--vc-indigo);
+  border-radius: 50%;
+  animation: vc-spin 0.9s linear infinite;
+}
+@keyframes vc-spin { to { transform: rotate(360deg); } }
 .leaflet-container { font-family: var(--font-primary); font-weight: 300; background: #ffffff; }
 .leaflet-tooltip.pct-tip {
   font-family: var(--font-primary);
@@ -744,11 +759,11 @@ table.data th.num { text-align: right; }
 
   <div class="chart-card">
     <h3 id="mapTitle">Rate per 100,000 residents, by precinct &mdash; 2026 YTD</h3>
-    <p class="chart-dek" id="mapDek">2026 year-to-date assault complaints divided by 2020 Census precinct population, compared with the same months in 2025. Toggle to see raw volume, percent change vs. the same period last year, or absolute change vs. the same period last year.</p>
+    <p class="chart-dek" id="mapDek">2026 year-to-date assault complaints divided by 2020 Census precinct population, compared with the same period in 2025. Toggle to see raw volume, percent change vs. the same period last year, or absolute change vs. the same period last year. <strong>Current-year numbers come from NYPD CompStat weekly reports</strong> (refreshed each Tuesday); historical years below come from NYC Open Data complaint-level records.</p>
 
     <div id="mapPendingBanner" style="display:none; margin:14px 0 18px; padding:14px 18px; border-left:4px solid var(--vc-magenta); background:var(--vc-magenta-20); font-size:13px; line-height:1.55;">
-      <strong id="mapPendingHead">Waiting for NYPD to publish 2026 data.</strong>
-      <span id="mapPendingBody">The NYC Open Data complaint feed has not yet released 2026 records. This map will populate automatically once NYPD updates it &mdash; typically a few weeks after the close of each quarter. In the meantime, see the long-run charts above for 2025-and-earlier trends.</span>
+      <strong id="mapPendingHead">Live data temporarily unavailable.</strong>
+      <span id="mapPendingBody">The NYPD CompStat feed could not be reached. This map will populate automatically once the feed is back online. In the meantime, see the long-run charts above for 2025 and earlier trends.</span>
     </div>
 
 
@@ -778,26 +793,26 @@ table.data th.num { text-align: right; }
     <h3 style="margin-top: 28px; font-size: 16px;" id="topListTitle">Top 10 precincts by rate per 100k</h3>
     <div class="top-list" id="topList"></div>
 
-    <p class="source-line" style="margin-top: 18px;">Sources: <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Current-Year-To-Date-/5uac-w243" target="_blank" rel="noopener">NYPD Complaint Data &mdash; Current (YTD)</a> and <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i" target="_blank" rel="noopener">Historic</a> (whichever endpoint has the year being queried); <a href="https://data.cityofnewyork.us/Public-Safety/Police-Precincts/y76i-bdw7" target="_blank" rel="noopener">NYC Open Data Police Precincts</a> GeoJSON for boundaries; 2020 Census Block-to-Precinct population crosswalk compiled by <a href="https://github.com/jkeefe/census-by-precincts" target="_blank" rel="noopener">John Keefe (MIT-licensed)</a>. The range of months shown is whatever is most recently reported by NYPD &mdash; the comparison year is always the same months one year earlier, so partial-year data is compared like-for-like (Jan&ndash;Mar 2026 vs. Jan&ndash;Mar 2025, once 2026 data is published). Precinct 22 (Central Park) is excluded from rate calculations because it has a resident population of 129 &mdash; the rate would be misleadingly high. Population-based rates use the most recent decennial count (2020) and are not adjusted for precinct-level population change since then.</p>
+    <p class="source-line" style="margin-top: 18px;"><strong>Sources.</strong> Current-year per-precinct YTD (and same-period prior-year YTD) is pulled live from <a href="https://www.nyc.gov/site/nypd/stats/crime-statistics/compstat.page" target="_blank" rel="noopener">NYPD CompStat weekly reports</a>, via the <a href="https://github.com/joshgreenman1973/nypd-compstat-scraper" target="_blank" rel="noopener">nypd-compstat-scraper</a> open-source feed. Historical full-year totals in the long-run charts above come from <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i" target="_blank" rel="noopener">NYPD Complaint Data Historic</a> (1993&ndash;2024) and <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Current-Year-To-Date-/5uac-w243" target="_blank" rel="noopener">Current YTD</a> (2025). We use CompStat for the current-year map because the complaint-level Open Data feed typically lags by several weeks; CompStat aggregates are published every Tuesday for the prior week. Boundaries: <a href="https://data.cityofnewyork.us/Public-Safety/Police-Precincts/y76i-bdw7" target="_blank" rel="noopener">NYC Open Data Police Precincts</a>. Rates use a 2020 Census block-to-precinct population crosswalk compiled by <a href="https://github.com/jkeefe/census-by-precincts" target="_blank" rel="noopener">John Keefe (MIT-licensed)</a>. Precinct 22 (Central Park) is excluded from rate calculations because it has a resident population of 129 &mdash; the rate would be misleadingly high. Population-based rates use the most recent decennial count (2020) and are not adjusted for precinct-level population change since then.</p>
   </div>
 
   <!-- Subway assault context box -->
   <div class="section-h">
     <h2>In the subway</h2>
-    <span class="tag">Transit-district felony assaults</span>
+    <span class="tag">NYC Transit police jurisdiction</span>
   </div>
   <div class="chart-card">
-    <h3>Subway felony assaults are a small share of the citywide total</h3>
-    <p class="chart-dek">Subway assaults get disproportionate news coverage. The absolute number is always worth keeping in view alongside the trendline &mdash; even in the peak years, fewer than 1 in 20 felony assaults citywide happened in the subway system.</p>
+    <h3>Subway crime is a small share of the citywide total</h3>
+    <p class="chart-dek">Subway crime gets disproportionate news coverage relative to its share of citywide crime. The KPIs below track all seven major felonies (murder, rape, robbery, felony assault, burglary, grand larceny, and grand larceny auto) in the NYC Transit police jurisdiction &mdash; the subway system, excluding LIRR/Metro-North/PATH/NYC Ferry. The chart below zooms in on felony assault specifically.</p>
 
     <div class="kpi-grid" style="margin:12px 0 20px;">
       <div class="kpi">
-        <div class="label" id="subwayKpi1Label">Subway felony assaults &mdash; latest year</div>
+        <div class="label" id="subwayKpi1Label">Major felony crimes in NYC Transit &mdash; YTD</div>
         <div class="value" id="subwayKpi1Value">&mdash;</div>
         <div class="sub" id="subwayKpi1Sub">&mdash;</div>
       </div>
       <div class="kpi">
-        <div class="label" id="subwayKpi2Label">Share of citywide felony assaults</div>
+        <div class="label" id="subwayKpi2Label">Share of citywide major felony crime</div>
         <div class="value" id="subwayKpi2Value">&mdash;</div>
         <div class="sub" id="subwayKpi2Sub">&mdash;</div>
       </div>
@@ -808,8 +823,10 @@ table.data th.num { text-align: right; }
       </div>
     </div>
 
+    <h3 style="margin-top: 28px; font-size: 16px;">Subway felony assault, monthly</h3>
+    <p class="chart-dek" style="margin-top: 4px;">Monthly felony assault complaints in the subway system only (narrower than "major felony crime" in the KPIs above).</p>
     <div class="chart-holder h-md"><canvas id="subwayChart"></canvas></div>
-    <p class="source-line"><a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i" target="_blank" rel="noopener">NYPD Complaint Data &mdash; Historic</a> and <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Current-Year-To-Date-/5uac-w243" target="_blank" rel="noopener">Current (YTD)</a>, filtered on <code>transit_district IS NOT NULL</code>, which NYPD uses to flag complaints that occurred within the New York City Transit police districts (the subway system). Excludes LIRR, Metro-North, PATH, and NYC Ferry. The 2026 series is a partial year.</p>
+    <p class="source-line"><strong>KPIs (top row):</strong> <a href="https://www.nyc.gov/site/nypd/stats/crime-statistics/compstat.page" target="_blank" rel="noopener">NYPD CompStat &mdash; Transit</a>, which covers all seven major felonies in the NYC Transit police jurisdiction (the subway system, excluding LIRR, Metro-North, PATH, and NYC Ferry). <strong>Monthly chart:</strong> <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i" target="_blank" rel="noopener">NYPD Complaint Data &mdash; Historic</a> and <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Current-Year-To-Date-/5uac-w243" target="_blank" rel="noopener">Current (YTD)</a>, filtered to felony assault complaints where <code>transit_district IS NOT NULL</code>. The two sources use slightly different boundaries (CompStat Transit includes all major felonies; Open Data's <code>transit_district</code> flag is specifically felony assault here), so the per-year totals will differ by design.</p>
   </div>
 
   <!-- Annual totals table -->
@@ -960,8 +977,28 @@ const ENDPOINTS = {
   historic: 'https://data.cityofnewyork.us/resource/qgea-i56i.json',
   ytd: 'https://data.cityofnewyork.us/resource/5uac-w243.json',
   historicMeta: 'https://data.cityofnewyork.us/api/views/qgea-i56i.json',
-  ytdMeta: 'https://data.cityofnewyork.us/api/views/5uac-w243.json'
+  ytdMeta: 'https://data.cityofnewyork.us/api/views/5uac-w243.json',
+  // NYPD CompStat weekly reports, scraped and published as JSON.
+  // Source: https://github.com/joshgreenman1973/nypd-compstat-scraper
+  // Used to populate current-year YTD (and same-period prior-year YTD)
+  // while NYC Open Data's complaint-level feed catches up for the current year.
+  compstat: 'https://raw.githubusercontent.com/joshgreenman1973/nypd-compstat-scraper/main/data/latest_compstat.json'
 };
+
+// Convert CompStat precinct key ("1st Precinct", "103rd Precinct") to NYC
+// Open Data numeric precinct string ("1", "103"). Returns null for non-matches.
+function compstatPrecinctNum(name) {
+  const m = /^(\d+)/.exec(name);
+  return m ? m[1] : null;
+}
+
+// Parse CompStat report period end date (e.g. "4/12/2026") into a Date.
+function parseCompstatDate(s) {
+  if (!s) return null;
+  const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(String(s).trim());
+  if (!m) return null;
+  return new Date(Number(m[3]), Number(m[1]) - 1, Number(m[2]));
+}
 
 const COLORS = {
   black: '#050507',
@@ -1189,6 +1226,22 @@ async function loadPrecinctGeo() {
   const r = await fetch('https://data.cityofnewyork.us/api/geospatial/y76i-bdw7?method=export&format=GeoJSON');
   if (!r.ok) throw new Error('Precinct GeoJSON fetch failed');
   return r.json();
+}
+
+// Fetch the latest NYPD CompStat weekly report (scraped & published as JSON).
+// Returns null on failure so callers can gracefully fall back.
+let _compstatCache = null;
+async function loadCompstat() {
+  if (_compstatCache) return _compstatCache;
+  try {
+    const r = await fetch(ENDPOINTS.compstat + '?t=' + Date.now());
+    if (!r.ok) throw new Error('CompStat fetch failed: ' + r.status);
+    _compstatCache = await r.json();
+    return _compstatCache;
+  } catch (e) {
+    console.warn('CompStat load failed', e);
+    return null;
+  }
 }
 
 async function loadBorough(year) {
@@ -1844,49 +1897,90 @@ function rangeLabelFor(year, endMonth) {
   return `Jan–${MONTH_ABBR[endMonth - 1]} ${year}`;  // Jan–Mar 2026, Jan–Nov 2025, etc.
 }
 
+// Ingest a CompStat report JSON into MAP_STATE. Returns { endDate, endDateStr }
+// describing the current-year YTD cutoff, or null if CompStat data was unusable.
+function ingestCompstat(cs) {
+  if (!cs) return null;
+  const endDate = parseCompstatDate(cs?.citywide?.report_period?.week_end);
+  if (!endDate) return null;
+
+  const cur = { FELONY: {}, MISDEMEANOR: {} };
+  const pri = { FELONY: {}, MISDEMEANOR: {} };
+  Object.keys(cs).forEach(key => {
+    if (!/Precinct/.test(key)) return;
+    const p = compstatPrecinctNum(key);
+    if (!p) return;
+    const fel = cs[key]?.seven_major_felonies?.['Fel. Assault']?.year_to_date;
+    const mis = cs[key]?.additional_stats?.['Misd. Assault']?.year_to_date;
+    if (fel) {
+      cur.FELONY[p] = Number(fel.current_year) || 0;
+      pri.FELONY[p] = Number(fel.prior_year) || 0;
+    }
+    if (mis) {
+      cur.MISDEMEANOR[p] = Number(mis.current_year) || 0;
+      pri.MISDEMEANOR[p] = Number(mis.prior_year) || 0;
+    }
+  });
+  MAP_STATE.counts.current = cur;
+  MAP_STATE.counts.prior = pri;
+  return { endDate, endDateStr: cs.citywide.report_period.week_end };
+}
+
+// Format a CompStat YTD end date as a range label, e.g. "Jan 1 – Apr 12, 2026".
+function compstatRangeLabel(endDate) {
+  const m = MONTH_ABBR[endDate.getMonth()];
+  const d = endDate.getDate();
+  return `Jan 1 – ${m} ${d}, ${endDate.getFullYear()}`;
+}
+function compstatPriorRangeLabel(endDate) {
+  const m = MONTH_ABBR[endDate.getMonth()];
+  const d = endDate.getDate();
+  return `Jan 1 – ${m} ${d}, ${endDate.getFullYear() - 1}`;
+}
+
 async function initMap() {
   // The precinct map is editorially locked to 2026 year-to-date vs. the same
-  // months in 2025 — always that comparison, never a fallback to a prior year.
-  // When NYC Open Data hasn't published 2026 records yet, we show a pending
-  // banner in place of colored polygons until it does.
+  // period in 2025. Primary source: NYPD CompStat weekly reports (aggregated,
+  // fast, current-through-last-week). Fallback: NYC Open Data complaint-level
+  // feed (slower to publish the current year, used only if CompStat is down).
   const currentYear = 2026;
   const priorYear = 2025;
 
-  // What months of 2026 are present in NYC Open Data? Null = nothing yet.
-  const ytdEndMonth = await getYtdEndMonthForYear(currentYear);
-  const dataPending = ytdEndMonth == null;
+  const cs = await loadCompstat();
+  const csMeta = ingestCompstat(cs);
+  const usingCompstat = !!csMeta;
+  const dataPending = !usingCompstat; // only "pending" if CompStat also failed
 
-  // If there's no 2026 data yet, use the previous full month (based on today's
-  // calendar date) as the expected range for labeling purposes only. Once NYPD
-  // publishes, the real data will fill in and the label will match.
-  let endMonth = ytdEndMonth;
-  if (endMonth == null) {
+  let endMonth;
+  if (usingCompstat) {
+    endMonth = csMeta.endDate.getMonth() + 1; // for internal labeling use
+    MAP_STATE.rangeLabel = compstatRangeLabel(csMeta.endDate);
+    MAP_STATE.priorRangeLabel = compstatPriorRangeLabel(csMeta.endDate);
+  } else {
     const today = new Date();
     endMonth = today.getFullYear() > currentYear ? 12 : Math.max(1, today.getMonth());
+    MAP_STATE.rangeLabel = rangeLabelFor(currentYear, endMonth);
+    MAP_STATE.priorRangeLabel = rangeLabelFor(priorYear, endMonth);
   }
 
   MAP_STATE.ytdEndMonth = endMonth;
   MAP_STATE.currentYear = currentYear;
   MAP_STATE.priorYear = priorYear;
-  MAP_STATE.rangeLabel = rangeLabelFor(currentYear, endMonth);
-  MAP_STATE.priorRangeLabel = rangeLabelFor(priorYear, endMonth);
 
   // Section tag
   const tagEl = document.getElementById('mapSectionTag');
   if (tagEl) tagEl.textContent =
-    `By NYPD precinct · ${MAP_STATE.rangeLabel} YTD vs. ${MAP_STATE.priorRangeLabel} YTD`;
+    `By NYPD precinct · ${MAP_STATE.rangeLabel} vs. ${MAP_STATE.priorRangeLabel}`;
 
-  // Pending banner. When no 2026 data exists yet, we also hide the map's
-  // data-driven UI (legend, top list, metric/type toggles) so users don't
-  // see a ghostly all-zero state that looks broken.
+  // Pending banner. Only appears when BOTH CompStat and Open Data are unusable.
   const bannerEl = document.getElementById('mapPendingBanner');
   if (bannerEl) {
     if (dataPending) {
       bannerEl.style.display = 'block';
       const head = document.getElementById('mapPendingHead');
       const body = document.getElementById('mapPendingBody');
-      if (head) head.textContent = `Waiting for NYPD to publish ${MAP_STATE.rangeLabel} data.`;
-      if (body) body.textContent = `The NYC Open Data complaint feed has not yet released any 2026 records. This map will populate automatically once NYPD updates it — typically a few weeks after the close of each quarter. In the meantime, see the long-run charts above for 2025 and earlier trends.`;
+      if (head) head.textContent = `Live data temporarily unavailable.`;
+      if (body) body.textContent = `The NYPD CompStat feed could not be reached. This map will populate automatically once the feed is back online. See the long-run charts above for 2025 and earlier trends.`;
     } else {
       bannerEl.style.display = 'none';
     }
@@ -1903,20 +1997,9 @@ async function initMap() {
     if (el) el.style.display = dataPending ? 'none' : '';
   });
 
-  // Always load the GeoJSON so we can render outlines even in pending state.
-  // Only load count data when 2026 exists; otherwise feed in empty buckets
-  // so the map shows all grey.
-  const geoPromise = loadPrecinctGeo();
-  const [geo, pCur, pPri] = dataPending
-    ? [await geoPromise, [], []]
-    : await Promise.all([
-        geoPromise,
-        loadPrecinctYTD(currentYear, endMonth),
-        loadPrecinctYTD(priorYear, endMonth),
-      ]);
+  // Load GeoJSON. Counts are already in MAP_STATE via ingestCompstat().
+  const geo = await loadPrecinctGeo();
   MAP_STATE.geo = geo;
-  ingestPrecinctRows(pCur, MAP_STATE.counts.current);
-  ingestPrecinctRows(pPri, MAP_STATE.counts.prior);
 
   MAP_STATE.map = L.map('precinctMap', {
     scrollWheelZoom: false,
@@ -1924,19 +2007,17 @@ async function initMap() {
     attributionControl: false,
     zoomControl: true
   });
-  // No basemap tiles — just polygons on white, cleaner look
-  MAP_STATE.map.attributionControl = L.control.attribution({ prefix: false }).addAttribution('Boundaries: NYC Open Data').addTo(MAP_STATE.map);
+  MAP_STATE.map.attributionControl = L.control.attribution({ prefix: false })
+    .addAttribution('Boundaries: NYC Open Data · Data: NYPD CompStat')
+    .addTo(MAP_STATE.map);
 
-  // Fit to data bounds
   const tempLayer = L.geoJSON(geo);
   MAP_STATE.map.fitBounds(tempLayer.getBounds(), { padding: [8, 8] });
 
   if (dataPending) {
-    // Grey outlines only, no choropleth coloring, no interaction tooltips.
     MAP_STATE.layer = L.geoJSON(geo, {
       style: () => ({ fillColor: '#2a2a2f', weight: 0.7, color: '#ffffff', fillOpacity: 0.5 })
     }).addTo(MAP_STATE.map);
-    // Map title/dek stay as the 2026-YTD labels; the banner explains the wait.
     document.getElementById('mapTitle').textContent =
       `Rate per 100,000 residents, by precinct — ${MAP_STATE.rangeLabel}`;
   } else {
@@ -1989,6 +2070,8 @@ function renderAnnualTable(annual) {
 }
 
 async function renderSubway() {
+  // Historical monthly trendline still comes from NYC Open Data complaint-level feed.
+  // Current-year KPIs (2026 YTD vs. same-period 2025) come from NYPD CompStat Transit.
   let monthlyRows = [];
   try {
     monthlyRows = await loadSubwayMonthly();
@@ -1998,40 +2081,77 @@ async function renderSubway() {
   }
   if (!monthlyRows.length) return;
 
-  // Aggregate by year for KPIs and for the share-of-citywide calc
-  const byYear = {};
-  monthlyRows.forEach(r => {
-    const y = Number(r.ym.slice(0, 4));
-    if (!y) return;
-    byYear[y] = (byYear[y] || 0) + Number(r.n);
-  });
-  const years = Object.keys(byYear).map(Number).sort();
-  // Pick the most recent complete calendar year for KPIs
-  const today = new Date();
-  const thisYear = today.getFullYear();
-  const latestComplete = years.filter(y => y < thisYear).pop() || years[years.length - 1];
-  const subwayLatest = byYear[latestComplete] || 0;
+  // Try CompStat first — gives us 2026 YTD and same-period 2025 YTD for free.
+  // CompStat's "Transit" field covers ALL seven major felonies in the Transit
+  // Bureau jurisdiction (subway), not just felony assault. So we divide against
+  // citywide total-seven-major-felonies (apples-to-apples), not citywide felony
+  // assault alone.
+  const cs = await loadCompstat();
+  const csEnd = parseCompstatDate(cs?.citywide?.report_period?.week_end);
+  const transit = cs?.citywide?.additional_stats?.Transit?.year_to_date;
+  const totalMajor = cs?.citywide?.total_seven_major?.year_to_date;
 
-  // Citywide denominator for share calc
-  const citywide = await loadCitywideFelonyByYear([latestComplete]);
-  const cityLatest = citywide[latestComplete] || 0;
-  const share = cityLatest ? (subwayLatest / cityLatest) * 100 : null;
+  if (csEnd && transit && totalMajor) {
+    const rangeLabel = compstatRangeLabel(csEnd);          // "Jan 1 – Apr 12, 2026"
+    const priorRangeLabel = compstatPriorRangeLabel(csEnd); // "Jan 1 – Apr 12, 2025"
+    const subwayYTD = Number(transit.current_year) || 0;
+    const subwayPriorYTD = Number(transit.prior_year) || 0;
+    const cityYTD = Number(totalMajor.current_year) || 0;
+    const share = cityYTD ? (subwayYTD / cityYTD) * 100 : null;
+    const pctChg = subwayPriorYTD ? ((subwayYTD - subwayPriorYTD) / subwayPriorYTD) * 100 : null;
 
-  document.getElementById('subwayKpi1Label').textContent = `Subway felony assaults · ${latestComplete}`;
-  document.getElementById('subwayKpi1Value').textContent = subwayLatest.toLocaleString();
-  document.getElementById('subwayKpi1Sub').textContent = cityLatest
-    ? `Citywide that year: ${cityLatest.toLocaleString()}`
-    : '';
+    document.getElementById('subwayKpi1Label').textContent = `Major felony crimes in NYC Transit · ${rangeLabel}`;
+    document.getElementById('subwayKpi1Value').textContent = subwayYTD.toLocaleString();
+    document.getElementById('subwayKpi1Sub').innerHTML = pctChg == null
+      ? `Citywide major felonies this period: ${cityYTD.toLocaleString()}`
+      : `<span class="pill ${pctChg > 0 ? 'up' : pctChg < 0 ? 'down' : 'flat'}">${pctStr(pctChg)}</span> vs. ${priorRangeLabel} (${subwayPriorYTD.toLocaleString()})`;
 
-  document.getElementById('subwayKpi2Label').textContent = `Share of citywide felony assaults · ${latestComplete}`;
-  document.getElementById('subwayKpi2Value').textContent = share == null ? '—' : share.toFixed(1) + '%';
-  document.getElementById('subwayKpi2Sub').textContent = share == null
-    ? ''
-    : `Roughly 1 in ${Math.round(100 / share)} citywide felony assaults`;
+    document.getElementById('subwayKpi2Label').textContent = `Share of citywide major felony crime · ${rangeLabel}`;
+    document.getElementById('subwayKpi2Value').textContent = share == null ? '—' : share.toFixed(1) + '%';
+    document.getElementById('subwayKpi2Sub').textContent = share == null
+      ? ''
+      : `Roughly 1 in ${Math.round(100 / share)} citywide major felony crimes`;
 
-  const perDay = subwayLatest / 365;
-  document.getElementById('subwayKpi3Value').textContent = perDay.toFixed(1);
-  document.getElementById('subwayKpi3Sub').textContent = `${latestComplete} average · across ~472 subway stations`;
+    // Per-day: YTD ÷ number of days elapsed this year through the report's week end
+    const jan1 = new Date(csEnd.getFullYear(), 0, 1);
+    const days = Math.max(1, Math.round((csEnd - jan1) / 86400000) + 1);
+    const perDay = subwayYTD / days;
+    document.getElementById('subwayKpi3Value').textContent = perDay.toFixed(1);
+    document.getElementById('subwayKpi3Sub').textContent = `${rangeLabel} · across ~472 subway stations`;
+  } else {
+    // Fallback: CompStat unavailable — fall back to last complete year from Open Data.
+    const byYear = {};
+    monthlyRows.forEach(r => {
+      const y = Number(r.ym.slice(0, 4));
+      if (!y) return;
+      byYear[y] = (byYear[y] || 0) + Number(r.n);
+    });
+    const years = Object.keys(byYear).map(Number).sort();
+    const today = new Date();
+    const thisYear = today.getFullYear();
+    const latestComplete = years.filter(y => y < thisYear).pop() || years[years.length - 1];
+    const subwayLatest = byYear[latestComplete] || 0;
+
+    const citywide = await loadCitywideFelonyByYear([latestComplete]);
+    const cityLatest = citywide[latestComplete] || 0;
+    const share = cityLatest ? (subwayLatest / cityLatest) * 100 : null;
+
+    document.getElementById('subwayKpi1Label').textContent = `Subway felony assaults · ${latestComplete}`;
+    document.getElementById('subwayKpi1Value').textContent = subwayLatest.toLocaleString();
+    document.getElementById('subwayKpi1Sub').textContent = cityLatest
+      ? `Citywide that year: ${cityLatest.toLocaleString()}`
+      : '';
+
+    document.getElementById('subwayKpi2Label').textContent = `Share of citywide felony assaults · ${latestComplete}`;
+    document.getElementById('subwayKpi2Value').textContent = share == null ? '—' : share.toFixed(1) + '%';
+    document.getElementById('subwayKpi2Sub').textContent = share == null
+      ? ''
+      : `Roughly 1 in ${Math.round(100 / share)} citywide felony assaults`;
+
+    const perDay = subwayLatest / 365;
+    document.getElementById('subwayKpi3Value').textContent = perDay.toFixed(1);
+    document.getElementById('subwayKpi3Sub').textContent = `${latestComplete} average · across ~472 subway stations`;
+  }
 
   // Render a monthly trendline
   const labels = monthlyRows.map(r => {
