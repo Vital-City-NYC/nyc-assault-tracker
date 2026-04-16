@@ -739,12 +739,18 @@ table.data th.num { text-align: right; }
   <!-- Precinct map -->
   <div class="section-h">
     <h2>Where in the city</h2>
-    <span class="tag" id="mapSectionTag">By NYPD precinct · 2026 YTD</span>
+    <span class="tag" id="mapSectionTag">By NYPD precinct &middot; 2026 YTD vs. 2025 YTD</span>
   </div>
 
   <div class="chart-card">
-    <h3 id="mapTitle">Rate per 100,000 residents, by precinct</h3>
-    <p class="chart-dek" id="mapDek">Assault complaints in the latest period reported by NYPD, divided by 2020 Census precinct population. Toggle to see raw volume, percent change vs. the same period last year, or absolute change vs. the same period last year.</p>
+    <h3 id="mapTitle">Rate per 100,000 residents, by precinct &mdash; 2026 YTD</h3>
+    <p class="chart-dek" id="mapDek">2026 year-to-date assault complaints divided by 2020 Census precinct population, compared with the same months in 2025. Toggle to see raw volume, percent change vs. the same period last year, or absolute change vs. the same period last year.</p>
+
+    <div id="mapPendingBanner" style="display:none; margin:14px 0 18px; padding:14px 18px; border-left:4px solid var(--vc-magenta); background:var(--vc-magenta-20); font-size:13px; line-height:1.55;">
+      <strong id="mapPendingHead">Waiting for NYPD to publish 2026 data.</strong>
+      <span id="mapPendingBody">The NYC Open Data complaint feed has not yet released 2026 records. This map will populate automatically once NYPD updates it &mdash; typically a few weeks after the close of each quarter. In the meantime, see the long-run charts above for 2025-and-earlier trends.</span>
+    </div>
+
 
     <div class="map-controls">
       <span class="ctl-label">Show</span>
@@ -1114,22 +1120,27 @@ async function loadPrecinctYTD(year, endMonth) {
   return hist.length ? hist : ytd;
 }
 
-async function getEffectivePeriod() {
-  // Returns { year, endMonth } — the most recent period in NYC Open Data with
-  // substantially complete data. Used to drive the precinct-map comparison:
-  // Jan–endMonth of `year` vs. Jan–endMonth of `year - 1`. If the latest month is
-  // fully reported (day >= 25), it is included. If the max date is December of a
-  // year, the comparison is effectively full year vs full year.
-  const r = await soql(ENDPOINTS.ytd,
+async function getYtdEndMonthForYear(year) {
+  // Returns the latest "substantially complete" month of `year` in NYC Open Data,
+  // or null if `year` has no data at all in either endpoint.
+  const q =
     `SELECT max(cmplnt_fr_dt) AS max_dt
-     WHERE (ofns_desc='FELONY ASSAULT' OR ofns_desc='ASSAULT 3 & RELATED OFFENSES')`);
-  if (!r.length || !r[0].max_dt) return null;
-  const dt = new Date(r[0].max_dt);
-  const year = dt.getUTCFullYear();
-  const day = dt.getUTCDate();
-  const month = dt.getUTCMonth() + 1;
-  const endMonth = day >= 25 ? month : Math.max(1, month - 1);
-  return { year, endMonth };
+     WHERE (ofns_desc='FELONY ASSAULT' OR ofns_desc='ASSAULT 3 & RELATED OFFENSES')
+       AND date_extract_y(cmplnt_fr_dt)=${year}`;
+  const [hist, ytd] = await Promise.all([
+    soql(ENDPOINTS.historic, q).catch(() => []),
+    soql(ENDPOINTS.ytd, q).catch(() => []),
+  ]);
+  let latest = null;
+  [...hist, ...ytd].forEach(r => {
+    if (!r || !r.max_dt) return;
+    const dt = new Date(r.max_dt);
+    if (!latest || dt > latest) latest = dt;
+  });
+  if (!latest) return null;
+  const day = latest.getUTCDate();
+  const month = latest.getUTCMonth() + 1;
+  return day >= 25 ? month : Math.max(1, month - 1);
 }
 
 async function loadSubwayMonthly() {
@@ -1834,13 +1845,25 @@ function rangeLabelFor(year, endMonth) {
 }
 
 async function initMap() {
-  // Figure out the latest period with substantially complete data on NYC Open Data.
-  // The "current" period and the "prior" period are always the same months — the
-  // prior is shifted one year back so the comparison is apples-to-apples.
-  const period = await getEffectivePeriod();
-  const currentYear = period ? period.year : 2025;
-  const endMonth = period ? period.endMonth : 12;
-  const priorYear = currentYear - 1;
+  // The precinct map is editorially locked to 2026 year-to-date vs. the same
+  // months in 2025 — always that comparison, never a fallback to a prior year.
+  // When NYC Open Data hasn't published 2026 records yet, we show a pending
+  // banner in place of colored polygons until it does.
+  const currentYear = 2026;
+  const priorYear = 2025;
+
+  // What months of 2026 are present in NYC Open Data? Null = nothing yet.
+  const ytdEndMonth = await getYtdEndMonthForYear(currentYear);
+  const dataPending = ytdEndMonth == null;
+
+  // If there's no 2026 data yet, use the previous full month (based on today's
+  // calendar date) as the expected range for labeling purposes only. Once NYPD
+  // publishes, the real data will fill in and the label will match.
+  let endMonth = ytdEndMonth;
+  if (endMonth == null) {
+    const today = new Date();
+    endMonth = today.getFullYear() > currentYear ? 12 : Math.max(1, today.getMonth());
+  }
 
   MAP_STATE.ytdEndMonth = endMonth;
   MAP_STATE.currentYear = currentYear;
@@ -1848,18 +1871,49 @@ async function initMap() {
   MAP_STATE.rangeLabel = rangeLabelFor(currentYear, endMonth);
   MAP_STATE.priorRangeLabel = rangeLabelFor(priorYear, endMonth);
 
-  // Update the section tag to reflect the actual range we'll show.
-  // If endMonth < 12 we're in YTD territory; if 12 we're comparing full years.
+  // Section tag
   const tagEl = document.getElementById('mapSectionTag');
-  if (tagEl) tagEl.textContent = endMonth === 12
-    ? `By NYPD precinct · ${MAP_STATE.rangeLabel} vs. ${MAP_STATE.priorRangeLabel}`
-    : `By NYPD precinct · ${MAP_STATE.rangeLabel} YTD vs. ${MAP_STATE.priorRangeLabel}`;
+  if (tagEl) tagEl.textContent =
+    `By NYPD precinct · ${MAP_STATE.rangeLabel} YTD vs. ${MAP_STATE.priorRangeLabel} YTD`;
 
-  const [geo, pCur, pPri] = await Promise.all([
-    loadPrecinctGeo(),
-    loadPrecinctYTD(currentYear, endMonth),
-    loadPrecinctYTD(priorYear, endMonth),
-  ]);
+  // Pending banner. When no 2026 data exists yet, we also hide the map's
+  // data-driven UI (legend, top list, metric/type toggles) so users don't
+  // see a ghostly all-zero state that looks broken.
+  const bannerEl = document.getElementById('mapPendingBanner');
+  if (bannerEl) {
+    if (dataPending) {
+      bannerEl.style.display = 'block';
+      const head = document.getElementById('mapPendingHead');
+      const body = document.getElementById('mapPendingBody');
+      if (head) head.textContent = `Waiting for NYPD to publish ${MAP_STATE.rangeLabel} data.`;
+      if (body) body.textContent = `The NYC Open Data complaint feed has not yet released any 2026 records. This map will populate automatically once NYPD updates it — typically a few weeks after the close of each quarter. In the meantime, see the long-run charts above for 2025 and earlier trends.`;
+    } else {
+      bannerEl.style.display = 'none';
+    }
+  }
+  // Hide/show data-driven UI based on pending state
+  const hideWhenPending = [
+    document.getElementById('mapLegend'),
+    document.getElementById('topList'),
+    document.getElementById('topListTitle'),
+    document.querySelector('.map-footnote'),
+    ...document.querySelectorAll('.map-controls'),
+  ];
+  hideWhenPending.forEach(el => {
+    if (el) el.style.display = dataPending ? 'none' : '';
+  });
+
+  // Always load the GeoJSON so we can render outlines even in pending state.
+  // Only load count data when 2026 exists; otherwise feed in empty buckets
+  // so the map shows all grey.
+  const geoPromise = loadPrecinctGeo();
+  const [geo, pCur, pPri] = dataPending
+    ? [await geoPromise, [], []]
+    : await Promise.all([
+        geoPromise,
+        loadPrecinctYTD(currentYear, endMonth),
+        loadPrecinctYTD(priorYear, endMonth),
+      ]);
   MAP_STATE.geo = geo;
   ingestPrecinctRows(pCur, MAP_STATE.counts.current);
   ingestPrecinctRows(pPri, MAP_STATE.counts.prior);
@@ -1877,7 +1931,17 @@ async function initMap() {
   const tempLayer = L.geoJSON(geo);
   MAP_STATE.map.fitBounds(tempLayer.getBounds(), { padding: [8, 8] });
 
-  drawChoropleth('rate');
+  if (dataPending) {
+    // Grey outlines only, no choropleth coloring, no interaction tooltips.
+    MAP_STATE.layer = L.geoJSON(geo, {
+      style: () => ({ fillColor: '#2a2a2f', weight: 0.7, color: '#ffffff', fillOpacity: 0.5 })
+    }).addTo(MAP_STATE.map);
+    // Map title/dek stay as the 2026-YTD labels; the banner explains the wait.
+    document.getElementById('mapTitle').textContent =
+      `Rate per 100,000 residents, by precinct — ${MAP_STATE.rangeLabel}`;
+  } else {
+    drawChoropleth('rate');
+  }
 
   document.querySelectorAll('.map-btn').forEach(btn => {
     btn.addEventListener('click', () => {
