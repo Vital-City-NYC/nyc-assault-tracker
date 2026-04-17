@@ -401,6 +401,68 @@ footer {
 .map-type-btn:hover { background: var(--vc-cerulean-20); border-color: var(--vc-cerulean); color: var(--vc-cerulean); }
 .map-type-btn.active { background: var(--vc-cerulean); color: var(--vc-white); border-color: var(--vc-cerulean); }
 
+/* Generic chart toggle: reused by the monthly chart, borough chart, and
+   any future chart that needs a compact pill-style option picker. */
+.chart-toggle {
+  display: inline-flex;
+  gap: 0;
+  margin: 4px 0 14px;
+  flex-wrap: wrap;
+}
+.chart-toggle-btn {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 11px;
+  padding: 6px 12px;
+  border: 1px solid var(--vc-charcoal);
+  background: var(--vc-white);
+  color: var(--vc-charcoal);
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  margin-left: -1px;
+}
+.chart-toggle-btn:first-child { margin-left: 0; }
+.chart-toggle-btn:hover { background: var(--vc-cloud); }
+.chart-toggle-btn.active { background: var(--vc-black); color: var(--vc-white); border-color: var(--vc-black); z-index: 1; position: relative; }
+
+/* Baseline slider */
+.baseline-slider-wrap {
+  margin: 10px 0 18px;
+  padding: 16px 18px;
+  background: var(--vc-cloud);
+  border-left: 4px solid var(--vc-indigo);
+}
+.baseline-slider-wrap label {
+  display: block;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--vc-charcoal);
+  margin-bottom: 8px;
+}
+.baseline-slider-wrap input[type=range] {
+  width: 100%;
+  accent-color: var(--vc-indigo);
+}
+.baseline-slider-scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--vc-charcoal);
+  margin-top: 4px;
+}
+.baseline-headline {
+  font-family: var(--font-primary);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--vc-black);
+  margin: 6px 0 0;
+}
+.baseline-headline strong { font-weight: 700; }
+
 .map-footnote {
   font-family: var(--font-primary);
   font-weight: 300;
@@ -704,22 +766,40 @@ table.data th.num { text-align: right; }
 
   <div class="chart-card">
     <h3 id="monthlyTitle">Monthly assault complaints since 2019</h3>
-    <p class="chart-dek">Counts of valid assault complaints by month. The pandemic period is marked for context.</p>
+    <p class="chart-dek" id="monthlyDek">Counts of valid assault complaints by month. The pandemic period is marked for context.</p>
+    <div class="chart-toggle" role="tablist" aria-label="Smoothing">
+      <button class="chart-toggle-btn active" data-smooth="monthly" aria-pressed="true">Monthly</button>
+      <button class="chart-toggle-btn" data-smooth="rolling12" aria-pressed="false">12-month rolling avg.</button>
+    </div>
     <div class="chart-holder h-lg"><canvas id="monthlyChart"></canvas></div>
     <p class="source-line">Source: <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i" target="_blank" rel="noopener">NYPD Complaint Data — Historic</a> (2019–2024) and <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Current-Year-To-Date-/5uac-w243" target="_blank" rel="noopener">NYPD Complaint Data — Current (Year To Date)</a> (2025–). Counts include all complaints with offense codes <code>FELONY ASSAULT</code> or <code>ASSAULT 3 &amp; RELATED OFFENSES</code> (misdemeanor). Recent months may be revised as late reports are processed.</p>
   </div>
 
   <!-- The baseline chart (explicitly requested) -->
   <div class="section-h">
-    <h2>How today compares to four baselines</h2>
-    <span class="tag">% change since 1993, 2000, 2010, 2019</span>
+    <h2>How today compares to any year since 1993</h2>
+    <span class="tag">Pick a baseline with the slider</span>
   </div>
 
   <div class="chart-card">
-    <h3>Felony assault is below its 1993 peak but well above its 2010 low</h3>
-    <p class="chart-dek">Percent change between each baseline year and the most recent full year (2025). Values above zero mean 2025 was higher; values below zero mean 2025 was lower.</p>
-    <div class="chart-holder h-md"><canvas id="baselineChart"></canvas></div>
-    <p class="source-line">Source: Pre-2006 felony assault totals from <a href="https://www.nyc.gov/assets/nypd/downloads/pdf/analysis_and_planning/historical-crime-data/seven-major-felony-offenses-2000-2024.pdf" target="_blank" rel="noopener">NYPD Seven Major Felony Offenses (2000–2024)</a> and <a href="https://www.nyc.gov/assets/nypd/downloads/pdf/analysis_and_planning/historical-crime-data/seven-major-felony-offenses-by-precinct-1993-2024.pdf" target="_blank" rel="noopener">Seven Major Felonies by Precinct (1993–2024)</a>. 2006–2024 totals from NYPD Complaint Data Historic; 2025 from NYPD Complaint Data Current (YTD). Misdemeanor assault baselines pre-2006 are unavailable at the complaint level in NYC Open Data; 1993 and 2000 bars are not shown for that category.</p>
+    <h3 id="baselineTitle">How today compares</h3>
+    <p class="chart-dek" id="baselineDek">Pick any year from 1993 to the most recent complete year and this card will show how citywide felony and misdemeanor assault have changed since then.</p>
+
+    <div class="baseline-slider-wrap">
+      <label for="baselineSlider" id="baselineSliderLabel">Comparison year: 1993</label>
+      <input type="range" id="baselineSlider" min="1993" max="2024" step="1" value="1993" />
+      <div class="baseline-slider-scale">
+        <span>1993</span>
+        <span>2000</span>
+        <span>2010</span>
+        <span>2019</span>
+        <span id="baselineSliderMaxLabel">2024</span>
+      </div>
+      <p class="baseline-headline" id="baselineHeadline">&nbsp;</p>
+    </div>
+
+    <div class="chart-holder h-sm"><canvas id="baselineChart"></canvas></div>
+    <p class="source-line">Source: Pre-2006 felony assault totals from <a href="https://www.nyc.gov/assets/nypd/downloads/pdf/analysis_and_planning/historical-crime-data/seven-major-felony-offenses-2000-2024.pdf" target="_blank" rel="noopener">NYPD Seven Major Felony Offenses (2000–2024)</a> and <a href="https://www.nyc.gov/assets/nypd/downloads/pdf/analysis_and_planning/historical-crime-data/seven-major-felony-offenses-by-precinct-1993-2024.pdf" target="_blank" rel="noopener">Seven Major Felonies by Precinct (1993–2024)</a>. 2006–2024 totals from NYPD Complaint Data Historic; 2025 from NYPD Complaint Data Current (YTD). Misdemeanor assault totals are only available at the complaint level from 2006 onward, so picking a baseline before 2006 shows felony assault only.</p>
   </div>
 
   <!-- Long-run annual chart -->
@@ -739,9 +819,13 @@ table.data th.num { text-align: right; }
   <div class="grid-2">
     <div class="chart-card">
       <h3 id="boroTitle">By borough, year to date</h3>
-      <p class="chart-dek">Total assault complaints per borough, with felony and misdemeanor shown side by side. Tooltip shows the percent change vs. the same period a year earlier.</p>
+      <p class="chart-dek" id="boroDek">Total assault complaints per borough, with felony and misdemeanor shown side by side. Tooltip shows the percent change vs. the same period a year earlier.</p>
+      <div class="chart-toggle" role="tablist" aria-label="Borough unit">
+        <button class="chart-toggle-btn active" data-boro="total" aria-pressed="true">Totals</button>
+        <button class="chart-toggle-btn" data-boro="rate" aria-pressed="false">Per 100k residents</button>
+      </div>
       <div class="chart-holder h-md"><canvas id="boroughChart"></canvas></div>
-      <p class="source-line">Source: NYPD CompStat weekly report (via <a href="https://github.com/joshgreenman1973/nypd-compstat-scraper" target="_blank" rel="noopener">compstat-scraper</a>), aggregated from the 76 precinct-level reports into the five boroughs. Fallback: <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Current-Year-To-Date-/5uac-w243" target="_blank" rel="noopener">NYPD Complaint Data — Current (YTD)</a> when the CompStat feed is unavailable.</p>
+      <p class="source-line">Source: NYPD CompStat weekly report (via <a href="https://github.com/joshgreenman1973/nypd-compstat-scraper" target="_blank" rel="noopener">compstat-scraper</a>), aggregated from the 76 precinct-level reports into the five boroughs. Borough populations: 2020 U.S. Census (<a href="https://www.census.gov/quickfacts/" target="_blank" rel="noopener">QuickFacts</a>). Fallback source: <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Current-Year-To-Date-/5uac-w243" target="_blank" rel="noopener">NYPD Complaint Data — Current (YTD)</a> when the CompStat feed is unavailable.</p>
     </div>
     <div class="chart-card">
       <h3 id="windowsTitle">Short-term trend: week, 28 days, and year-to-date</h3>
@@ -1401,36 +1485,92 @@ async function renderKPIs(annual) {
   return { latest, prev, felLatest, misLatest };
 }
 
+// Trailing 12-month rolling average of a monthly series. Returns nulls for
+// the first 11 positions (not enough history to average yet).
+function rolling12(arr) {
+  const out = new Array(arr.length).fill(null);
+  let sum = 0;
+  let count = 0;
+  for (let i = 0; i < arr.length; i++) {
+    const v = Number(arr[i]);
+    if (!isNaN(v)) { sum += v; count++; }
+    if (i >= 12) {
+      const drop = Number(arr[i - 12]);
+      if (!isNaN(drop)) { sum -= drop; count--; }
+    }
+    if (i >= 11 && count > 0) out[i] = sum / count;
+  }
+  return out;
+}
+
+let _monthlyChart = null;
+let _monthlyData = null;
+let _monthlyMode = 'monthly'; // 'monthly' | 'rolling12'
+
 function renderMonthly(data) {
-  const { months, felony, misdem } = data;
+  _monthlyData = data;
+  drawMonthly();
+  // Wire up toggle (idempotent)
+  document.querySelectorAll('.chart-toggle-btn[data-smooth]').forEach(btn => {
+    btn.onclick = () => {
+      const mode = btn.dataset.smooth;
+      if (mode === _monthlyMode) return;
+      _monthlyMode = mode;
+      document.querySelectorAll('.chart-toggle-btn[data-smooth]').forEach(b => {
+        const active = b.dataset.smooth === mode;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      drawMonthly();
+    };
+  });
+}
+
+function drawMonthly() {
+  if (!_monthlyData) return;
+  const { months, felony, misdem } = _monthlyData;
   const labels = months.map(m => {
     const [y, mm] = m.split('-');
     return new Date(Number(y), Number(mm) - 1, 1);
   });
-  new Chart(document.getElementById('monthlyChart'), {
+  const isRolling = _monthlyMode === 'rolling12';
+  const felSeries = isRolling ? rolling12(felony) : felony;
+  const misSeries = isRolling ? rolling12(misdem) : misdem;
+
+  document.getElementById('monthlyTitle').textContent = isRolling
+    ? 'Monthly assault complaints since 2019 (12-month rolling average)'
+    : 'Monthly assault complaints since 2019';
+  document.getElementById('monthlyDek').textContent = isRolling
+    ? 'Each point is the average monthly count over the trailing 12 months, which smooths seasonal swings and makes longer-run shifts easier to see. The first year of data is blank while the 12-month window fills.'
+    : 'Counts of valid assault complaints by month. The pandemic period is marked for context.';
+
+  if (_monthlyChart) { _monthlyChart.destroy(); }
+  _monthlyChart = new Chart(document.getElementById('monthlyChart'), {
     type: 'line',
     data: {
       labels,
       datasets: [
         {
-          label: 'Misdemeanor assault',
-          data: misdem,
+          label: isRolling ? 'Misdemeanor assault (12-mo avg)' : 'Misdemeanor assault',
+          data: misSeries,
           borderColor: COLORS.indigo,
           backgroundColor: COLORS.indigo,
           borderWidth: 2,
           pointRadius: 0,
           pointHoverRadius: 4,
-          tension: 0.25
+          tension: 0.25,
+          spanGaps: false
         },
         {
-          label: 'Felony assault',
-          data: felony,
+          label: isRolling ? 'Felony assault (12-mo avg)' : 'Felony assault',
+          data: felSeries,
           borderColor: COLORS.orange,
           backgroundColor: COLORS.orange,
           borderWidth: 2,
           pointRadius: 0,
           pointHoverRadius: 4,
-          tension: 0.25
+          tension: 0.25,
+          spanGaps: false
         }
       ]
     },
@@ -1448,7 +1588,10 @@ function renderMonthly(data) {
         y: {
           beginAtZero: true,
           grid: { color: COLORS.cloud, drawBorder: false },
-          ticks: { color: COLORS.charcoal, callback: v => v.toLocaleString() }
+          ticks: { color: COLORS.charcoal, callback: v => Math.round(v).toLocaleString() },
+          title: isRolling
+            ? { display: true, text: 'Avg. complaints per month (trailing 12 mo.)', color: COLORS.charcoal, font: { size: 11 } }
+            : { display: false }
         }
       },
       plugins: {
@@ -1459,7 +1602,11 @@ function renderMonthly(data) {
               const d = items[0].parsed.x;
               return new Date(d).toLocaleString('en-US', { month: 'long', year: 'numeric' });
             },
-            label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()}`
+            label: ctx => {
+              if (ctx.parsed.y == null) return `${ctx.dataset.label}: —`;
+              const v = isRolling ? ctx.parsed.y.toFixed(0) : ctx.parsed.y.toLocaleString();
+              return `${ctx.dataset.label}: ${Number(v).toLocaleString()}`;
+            }
           }
         },
         annotation: {}
@@ -1468,44 +1615,87 @@ function renderMonthly(data) {
   });
 }
 
+let _baselineChart = null;
+let _baselineCtx = null; // { annual, latestYear }
+
+function getFelony(year) {
+  // HISTORIC_FELONY covers 1993–2005 from NYPD published tables; annual.felony
+  // covers 2006+ from NYC Open Data.
+  if (year < 2006) return HISTORIC_FELONY[year] ?? null;
+  return _baselineCtx?.annual?.felony?.[year] ?? null;
+}
+function getMisdem(year) {
+  // Misdemeanor assault complaint-level data only exists 2006+.
+  if (year < 2006) return null;
+  return _baselineCtx?.annual?.misdem?.[year] ?? null;
+}
+
 function renderBaseline(annual, latestYear) {
-  const felLatest = annual.felony[latestYear];
-  const misLatest = annual.misdem[latestYear];
-  const baselines = [1993, 2000, 2010, 2019];
+  _baselineCtx = { annual, latestYear };
+  const slider = document.getElementById('baselineSlider');
+  // Allow selecting any year from 1993 up through the latest FULL year (latestYear - 1).
+  // latestYear here is the current YTD/partial year; we don't want it as a baseline.
+  const maxYear = Math.max(1993, latestYear - 1);
+  slider.min = '1993';
+  slider.max = String(maxYear);
+  slider.value = '2019'; // Pleasant default — pre-pandemic baseline
+  document.getElementById('baselineSliderMaxLabel').textContent = String(maxYear);
 
-  // Felony: use HISTORIC for 1993, 2000; use API for 2010, 2019
-  const felValues = baselines.map(y => {
-    if (y < 2006) return pct(felLatest, HISTORIC_FELONY[y]);
-    return pct(felLatest, annual.felony[y]);
-  });
-  // Misdemeanor: only 2010 and 2019 (data starts 2006)
-  const misValues = baselines.map(y => {
-    if (y < 2006) return null;
-    return pct(misLatest, annual.misdem[y]);
-  });
+  const redraw = () => drawBaseline(Number(slider.value));
+  slider.oninput = redraw;
+  redraw();
+}
 
-  const labels = baselines.map(y => `${y} → ${latestYear}`);
+function drawBaseline(baselineYear) {
+  const { latestYear } = _baselineCtx;
+  const felLatest = getFelony(latestYear);
+  const misLatest = getMisdem(latestYear);
+  const felBase = getFelony(baselineYear);
+  const misBase = getMisdem(baselineYear);
 
-  new Chart(document.getElementById('baselineChart'), {
+  const felPct = felBase ? pct(felLatest, felBase) : null;
+  const misPct = misBase ? pct(misLatest, misBase) : null;
+
+  document.getElementById('baselineSliderLabel').textContent = `Comparison year: ${baselineYear}`;
+  document.getElementById('baselineTitle').textContent = `Citywide assault: ${latestYear} vs. ${baselineYear}`;
+
+  const phrase = v => {
+    if (v == null) return null;
+    if (Math.abs(v) < 0.5) return `about the same as ${baselineYear}`;
+    const mag = Math.abs(v).toFixed(1) + '%';
+    return v > 0 ? `${mag} higher than ${baselineYear}` : `${mag} lower than ${baselineYear}`;
+  };
+  const felP = phrase(felPct);
+  const misP = phrase(misPct);
+  let headline = '';
+  if (felP) headline += `Felony assault in ${latestYear} is <strong>${felP}</strong>`;
+  if (misP) headline += felP ? `; misdemeanor assault is <strong>${misP}</strong>.` : `Misdemeanor assault in ${latestYear} is <strong>${misP}</strong>.`;
+  else if (felP) headline += `. Misdemeanor assault isn't available before 2006.`;
+  else headline = 'No data available for that year.';
+  document.getElementById('baselineHeadline').innerHTML = headline;
+
+  // Chart: two bars, felony + misdemeanor, % change from selected baseline.
+  if (_baselineChart) { _baselineChart.destroy(); }
+  _baselineChart = new Chart(document.getElementById('baselineChart'), {
     type: 'bar',
     data: {
-      labels,
+      labels: [`${baselineYear} → ${latestYear}`],
       datasets: [
         {
           label: 'Felony assault',
-          data: felValues,
+          data: [felPct],
           backgroundColor: COLORS.orange,
           borderWidth: 0,
           barPercentage: 0.75,
-          categoryPercentage: 0.65
+          categoryPercentage: 0.55
         },
         {
           label: 'Misdemeanor assault',
-          data: misValues.map(v => v == null ? null : v),
+          data: [misPct],
           backgroundColor: COLORS.indigo,
           borderWidth: 0,
           barPercentage: 0.75,
-          categoryPercentage: 0.65
+          categoryPercentage: 0.55
         }
       ]
     },
@@ -1517,7 +1707,7 @@ function renderBaseline(annual, latestYear) {
         x: {
           grid: { color: COLORS.cloud, drawBorder: false },
           ticks: { color: COLORS.charcoal, callback: v => v + '%' },
-          title: { display: true, text: 'Percent change to ' + latestYear, color: COLORS.charcoal, font: { size: 12, weight: 300 } }
+          title: { display: true, text: `Percent change from ${baselineYear} to ${latestYear}`, color: COLORS.charcoal, font: { size: 12, weight: 300 } }
         },
         y: {
           grid: { display: false },
@@ -1529,7 +1719,7 @@ function renderBaseline(annual, latestYear) {
         tooltip: {
           callbacks: {
             label: ctx => {
-              if (ctx.parsed.x == null) return `${ctx.dataset.label}: not available pre-2006`;
+              if (ctx.parsed.x == null) return `${ctx.dataset.label}: not available for ${baselineYear}`;
               return `${ctx.dataset.label}: ${pctStr(ctx.parsed.x)}`;
             }
           }
@@ -1616,13 +1806,27 @@ function renderAnnualFelony(annual, latestYear) {
   });
 }
 
+// 2020 U.S. Census (QuickFacts) borough populations. These shift slightly
+// year to year (ACS updates), but the 2020 census is the most defensible
+// single denominator and is what the precinct choropleth above also uses.
+const BOROUGH_POP = {
+  'Bronx': 1472654,
+  'Brooklyn': 2736074,
+  'Manhattan': 1694251,
+  'Queens': 2405464,
+  'Staten Island': 495747
+};
+
+let _boroughChart = null;
+let _boroughData = null; // { felony, misdem, felonyPri, misdemPri, rangeLabel, priorRangeLabel }
+let _boroughMode = 'total'; // 'total' | 'rate'
+
 async function renderBorough(boroRows, latestYear) {
   // Preferred source: CompStat YTD aggregated from per-precinct data (gives 2026
   // YTD + same-period 2025 YTD). Fallback: Open Data boroRows (latest full year).
   const cs = await loadCompstat();
   const csEnd = parseCompstatDate(cs?.citywide?.report_period?.week_end);
 
-  const boroOrder = ['Bronx', 'Brooklyn', 'Manhattan', 'Queens', 'Staten Island'];
   let felony = {}, misdem = {}, felonyPri = {}, misdemPri = {};
   let rangeLabel = String(latestYear);
   let priorRangeLabel = null;
@@ -1657,18 +1861,61 @@ async function renderBorough(boroRows, latestYear) {
     });
   }
 
-  // Order by current-period total (highest first)
-  const totalBy = b => (felony[b] || 0) + (misdem[b] || 0);
+  _boroughData = { felony, misdem, felonyPri, misdemPri, rangeLabel, priorRangeLabel };
+  drawBorough();
+
+  document.querySelectorAll('.chart-toggle-btn[data-boro]').forEach(btn => {
+    btn.onclick = () => {
+      const mode = btn.dataset.boro;
+      if (mode === _boroughMode) return;
+      _boroughMode = mode;
+      document.querySelectorAll('.chart-toggle-btn[data-boro]').forEach(b => {
+        const active = b.dataset.boro === mode;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      drawBorough();
+    };
+  });
+}
+
+function drawBorough() {
+  if (!_boroughData) return;
+  const { felony, misdem, felonyPri, misdemPri, rangeLabel, priorRangeLabel } = _boroughData;
+  const boroOrder = ['Bronx', 'Brooklyn', 'Manhattan', 'Queens', 'Staten Island'];
+  const isRate = _boroughMode === 'rate';
+
+  // Transform per-mode. For rates, convert to per-100k residents.
+  const felonyShown = {}, misdemShown = {}, felPriShown = {}, misPriShown = {};
+  boroOrder.forEach(b => {
+    const pop = BOROUGH_POP[b] || 1;
+    const k = isRate ? (100000 / pop) : 1;
+    felonyShown[b] = (felony[b] || 0) * k;
+    misdemShown[b] = (misdem[b] || 0) * k;
+    felPriShown[b] = (felonyPri[b] || 0) * k;
+    misPriShown[b] = (misdemPri[b] || 0) * k;
+  });
+
+  // Sort descending by total of the *shown* metric.
+  const totalBy = b => (felonyShown[b] || 0) + (misdemShown[b] || 0);
   boroOrder.sort((a, b) => totalBy(b) - totalBy(a));
 
   const datasets = [
-    { label: 'Felony assault', data: boroOrder.map(b => felony[b] || 0), backgroundColor: COLORS.orange, borderWidth: 0, stack: 'cur' },
-    { label: 'Misdemeanor assault', data: boroOrder.map(b => misdem[b] || 0), backgroundColor: COLORS.indigo, borderWidth: 0, stack: 'cur' }
+    { label: 'Felony assault', data: boroOrder.map(b => felonyShown[b]), backgroundColor: COLORS.orange, borderWidth: 0, stack: 'cur' },
+    { label: 'Misdemeanor assault', data: boroOrder.map(b => misdemShown[b]), backgroundColor: COLORS.indigo, borderWidth: 0, stack: 'cur' }
   ];
 
-  document.getElementById('boroTitle').textContent = `By borough, ${rangeLabel}`;
+  document.getElementById('boroTitle').textContent = isRate
+    ? `By borough, per 100,000 residents · ${rangeLabel}`
+    : `By borough, ${rangeLabel}`;
+  document.getElementById('boroDek').textContent = isRate
+    ? 'Assault complaints per 100,000 residents (2020 Census). Per-capita rates flatten population differences, so Staten Island and Manhattan become easier to compare with Brooklyn and the Bronx. Tooltip shows the raw count and percent change vs. the same period a year earlier.'
+    : 'Total assault complaints per borough, with felony and misdemeanor shown side by side. Tooltip shows the percent change vs. the same period a year earlier.';
 
-  new Chart(document.getElementById('boroughChart'), {
+  const fmt = v => isRate ? v.toFixed(1) : Math.round(v).toLocaleString();
+
+  if (_boroughChart) { _boroughChart.destroy(); }
+  _boroughChart = new Chart(document.getElementById('boroughChart'), {
     type: 'bar',
     data: { labels: boroOrder, datasets },
     options: {
@@ -1676,7 +1923,15 @@ async function renderBorough(boroRows, latestYear) {
       maintainAspectRatio: false,
       scales: {
         x: { stacked: true, grid: { display: false }, ticks: { color: COLORS.black, font: { weight: 700, size: 12 } } },
-        y: { stacked: true, beginAtZero: true, grid: { color: COLORS.cloud, drawBorder: false }, ticks: { color: COLORS.charcoal, callback: v => v.toLocaleString() } }
+        y: {
+          stacked: true,
+          beginAtZero: true,
+          grid: { color: COLORS.cloud, drawBorder: false },
+          ticks: { color: COLORS.charcoal, callback: v => isRate ? v.toFixed(0) : v.toLocaleString() },
+          title: isRate
+            ? { display: true, text: 'Complaints per 100,000 residents', color: COLORS.charcoal, font: { size: 11 } }
+            : { display: false }
+        }
       },
       plugins: {
         legend: { position: 'bottom', align: 'start' },
@@ -1686,11 +1941,14 @@ async function renderBorough(boroRows, latestYear) {
               const boro = ctx.label;
               const curVal = ctx.parsed.y;
               const isFelony = ctx.dataset.label === 'Felony assault';
-              const priVal = isFelony ? (felonyPri[boro] || 0) : (misdemPri[boro] || 0);
-              let line = `${ctx.dataset.label}: ${curVal.toLocaleString()}`;
+              const priVal = isFelony ? (felPriShown[boro] || 0) : (misPriShown[boro] || 0);
+              // Also surface the raw count when showing rates, for context.
+              const rawCur = isFelony ? (felony[boro] || 0) : (misdem[boro] || 0);
+              let line = `${ctx.dataset.label}: ${fmt(curVal)}${isRate ? ' per 100k' : ''}`;
+              if (isRate && rawCur) line += `  (${rawCur.toLocaleString()} complaints)`;
               if (priorRangeLabel && priVal) {
                 const chg = pct(curVal, priVal);
-                line += `  (${pctStr(chg)} vs. ${priorRangeLabel})`;
+                line += `  ·  ${pctStr(chg)} vs. ${priorRangeLabel}`;
               }
               return line;
             }
