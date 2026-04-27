@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "last_updated": "2026-04-25",
+  "last_updated": "2026-04-27",
   "note": "Compiled from NYC District Attorney press releases (Manhattan, Brooklyn, Bronx, Queens, Staten Island), federal prosecutor announcements, and reporting in NY Post, Daily News, NY Times, Gothamist, ABC7, NBC4, CBS2, Patch, and amNY. Entries are de-duplicated where a single defendant appears in multiple reports; the same defendant may appear on multiple dates when separate events (arrest, indictment, conviction) are reported. A small number of entries point to a DA press-release index rather than a case-specific permalink because the DA website's indexed permalinks could not be confirmed at compile time; readers can verify via the DA's dated press-release archive.",
   "cases": [
     {
@@ -333,6 +333,14 @@
     },
     {
       "n": 42,
+      "name": "Joseph Martinez (AKA Jupiter Joe)",
+      "date": "2026-03-26",
+      "borough": "Bronx",
+      "summary": "Joseph Martinez was sentenced to 25 years to life in prison for the 1999 murder of 13-year-old Minerliz Soriano in the Bronx. Martinez sexually abused and killed the girl, whose body was found in a dumpster in Co-op City on February 28, 1999. The case became the first in New York City solved using familial DNA.",
+      "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/28-2026 Joseph-Martinez-aka-Jupiter-Joe-sentenced-1999-murder.pdf"
+    },
+    {
+      "n": 43,
       "name": "Nelson Torres",
       "date": "2026-03-26",
       "borough": "Queens",
@@ -340,7 +348,7 @@
       "source_url": "https://queensda.org/corona-man-indicted-for-first-degree-murder-for-fatal-stabbing-of-bicyclist/"
     },
     {
-      "n": 43,
+      "n": 44,
       "name": "Jermaine Longmire",
       "date": "2026-03-27",
       "borough": "Manhattan",
@@ -348,7 +356,7 @@
       "source_url": "https://manhattanda.org/d-a-bragg-announces-all-count-trial-conviction-in-central-park-attempted-rape/"
     },
     {
-      "n": 44,
+      "n": 45,
       "name": "Slattery gang members (six defendants)",
       "date": "2026-03-27",
       "borough": "Bronx",
@@ -356,7 +364,7 @@
       "source_url": "https://www.bronxda.nyc.gov/html/newsroom/press-releases.shtml"
     },
     {
-      "n": 45,
+      "n": 46,
       "name": "Three youths (Christopher Redding murder)",
       "date": "2026-03-27",
       "borough": "Bronx",
@@ -364,7 +372,7 @@
       "source_url": "https://www.bronxda.nyc.gov/html/newsroom/press-releases.shtml"
     },
     {
-      "n": 46,
+      "n": 47,
       "name": "Amuri Greene, Mathew Rodriguez",
       "date": "2026-04-01",
       "borough": "Brooklyn",
@@ -372,7 +380,7 @@
       "source_url": "https://www.brooklynda.org/2026/04/15/brooklyn-man-arraigned-on-murder-and-other-charges-for-shooting-that-killed-infant-wounded-toddler-brother-2/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=brooklyn-man-arraigned-on-murder-and-other-charges-for-shooting-that-killed-infant-wounded-toddler-brother-2"
     },
     {
-      "n": 47,
+      "n": 48,
       "name": "Mathew Rodriguez, Amuri Greene",
       "date": "2026-04-01",
       "borough": "Brooklyn",
@@ -380,7 +388,7 @@
       "source_url": "https://www.brooklynda.org/2026/04/14/brooklyn-man-arraigned-on-murder-and-other-charges-for-shooting-that-killed-infant-wounded-toddler-brother/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=brooklyn-man-arraigned-on-murder-and-other-charges-for-shooting-that-killed-infant-wounded-toddler-brother"
     },
     {
-      "n": 48,
+      "n": 49,
       "name": "Up the Hill defendants (seven gang members)",
       "date": "2026-04-02",
       "borough": "Manhattan",
@@ -388,7 +396,7 @@
       "source_url": "https://manhattanda.org/d-a-bragg-commiss-tisch-up-the-hill-defendants-indicted-for-murder-and-firearm-conspiracies-including-seven-shootings/"
     },
     {
-      "n": 49,
+      "n": 50,
       "name": "Alexander Williams and Wydeem Rudd",
       "date": "2026-04-13",
       "borough": "Brooklyn",
@@ -396,7 +404,7 @@
       "source_url": "https://brooklynda.org/2026/04/13/two-men-sentenced-to-45-years-to-life-in-prison/"
     },
     {
-      "n": 50,
+      "n": 51,
       "name": "Shaniqua Fort",
       "date": "2026-04-13",
       "borough": "Queens",
@@ -404,7 +412,7 @@
       "source_url": "https://queensda.org/woman-charged-with-arson-and-assault-for-setting-fire-at-three-locations-in-maspeth-throwing-a-brick-through-a-storefront-window-and-injuring-two/"
     },
     {
-      "n": 51,
+      "n": 52,
       "name": "Mathew Rodriguez",
       "date": "2026-04-14",
       "borough": "Brooklyn",
@@ -412,7 +420,7 @@
       "source_url": "https://brooklynda.org/2026/04/14/brooklyn-man-arraigned-on-murder-and-other-charges-for-shooting-that-killed-infant-wounded-toddler-brother/"
     },
     {
-      "n": 52,
+      "n": 53,
       "name": "36 alleged members of WOOO and CHOO gangs (Jaden Grant, Bryan Ramos, Deshawn Nimmons, Jeffrey Thomas, Marvellous Ehigiator, Nasir Wade, Tristan McFarlane and others)",
       "date": "2026-04-15",
       "borough": "Brooklyn",
@@ -420,7 +428,7 @@
       "source_url": "https://www.brooklynda.org/2026/04/15/thirty-six-alleged-members-of-two-rival-brownsville-based-gangs-charged-in-two-indictments/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=thirty-six-alleged-members-of-two-rival-brownsville-based-gangs-charged-in-two-indictments"
     },
     {
-      "n": 53,
+      "n": 54,
       "name": "Thirty-six alleged Wooo and Choo gang members",
       "date": "2026-04-15",
       "borough": "Brooklyn",
@@ -428,7 +436,7 @@
       "source_url": "https://www.brooklynda.org/2026/04/15/thirty-six-alleged-members-of-two-rival-brownsville-based-gangs-charged-in-two-indictments/"
     },
     {
-      "n": 54,
+      "n": 55,
       "name": "Andres Portilla",
       "date": "2026-04-16",
       "borough": "Queens",
@@ -436,7 +444,7 @@
       "source_url": "https://queensda.org/jackson-heights-man-sentenced-to-40-years-in-prison-for-the-kidnapping-and-rape-of-multiple-victims/"
     },
     {
-      "n": 55,
+      "n": 56,
       "name": "Angel Farias",
       "date": "2026-04-16",
       "borough": "Queens",
@@ -444,7 +452,23 @@
       "source_url": "https://queensda.org/queens-man-charged-with-sexually-abusing-6-year-old-in-jamaica-department-store/"
     },
     {
-      "n": 56,
+      "n": 57,
+      "name": "Zahir Davis",
+      "date": "2026-04-16",
+      "borough": "Queens",
+      "summary": "Zahir Davis, 18, was charged with murder in the second degree, gang assault in the first degree, and criminal possession of a weapon for shooting 15-year-old Jaden Pierre in the chest during a group attack at Roy Wilkins Park in St. Albans on April 16. Davis allegedly pulled a silver handgun and fired without provocation as the victim was being beaten by other teens, then fled to Jamaica before surrendering to police.",
+      "source_url": "https://queensda.org/teenager-charged-with-murder-for-shooting-death-of-15-year-old-jaden-pierre-in-roy-wilkins-park/"
+    },
+    {
+      "n": 58,
+      "name": "Eliud Garcia",
+      "date": "2026-04-23",
+      "borough": "Manhattan",
+      "summary": "Eliud Garcia, 50, was indicted for allegedly murdering his estranged wife, Basilisa Negron, 47, by shooting her six times at close range in her Harlem apartment on December 23, 2025. The indictment follows allegations that Garcia had assaulted and stalked Negron for months after she ended their relationship.",
+      "source_url": "https://manhattanda.org/d-a-bragg-man-indicted-for-murdering-his-wife-in-harlem/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-man-indicted-for-murdering-his-wife-in-harlem"
+    },
+    {
+      "n": 59,
       "name": "Kevin Gavin",
       "date": "2026-04-24",
       "borough": "Brooklyn",
@@ -452,5 +476,5 @@
       "source_url": "https://www.brooklynda.org/2026/04/24/brooklyn-man-who-preyed-on-elderly-neighbors-as-serial-killer-pleads-guilty-to-three-murders/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=brooklyn-man-who-preyed-on-elderly-neighbors-as-serial-killer-pleads-guilty-to-three-murders"
     }
   ],
-  "last_scan_date": "2026-04-25"
+  "last_scan_date": "2026-04-27"
 }
