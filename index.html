@@ -1522,34 +1522,46 @@ function showError(msg) {
 }
 
 // --- Loaders ---
+// Dedupe rows from two SoQL feeds keyed by some grouping cols. NYC Open Data
+// "rotates" between the Historic and YTD feeds on a quarterly cadence — when
+// the new year's data lands in YTD, the prior year is promoted to Historic
+// and YTD is empty for that year. We can't predict where any given year
+// lives at query time, so query BOTH and take the larger count per group.
+function mergeRowsMaxN(rows, keyFn) {
+  const out = {};
+  rows.forEach(r => {
+    const k = keyFn(r);
+    if (k == null) return;
+    const n = Number(r.n) || 0;
+    if (!(k in out) || n > Number(out[k].n)) out[k] = r;
+  });
+  return Object.values(out);
+}
+
 async function loadMonthly() {
-  // 2019–2024 from Historic
-  const hist = await soql(ENDPOINTS.historic,
-    `SELECT date_trunc_ym(cmplnt_fr_dt) AS ym, law_cat_cd, count(*) AS n
-     WHERE (ofns_desc='FELONY ASSAULT' OR ofns_desc='ASSAULT 3 & RELATED OFFENSES')
-       AND date_extract_y(cmplnt_fr_dt) >= 2019 AND date_extract_y(cmplnt_fr_dt) <= 2024
-     GROUP BY ym, law_cat_cd ORDER BY ym`);
-  // 2025 forward from YTD
-  const ytd = await soql(ENDPOINTS.ytd,
-    `SELECT date_trunc_ym(cmplnt_fr_dt) AS ym, law_cat_cd, count(*) AS n
-     WHERE (ofns_desc='FELONY ASSAULT' OR ofns_desc='ASSAULT 3 & RELATED OFFENSES')
-       AND date_extract_y(cmplnt_fr_dt) >= 2025
-     GROUP BY ym, law_cat_cd ORDER BY ym`);
-  return [...hist, ...ytd];
+  // Pull the same range from both endpoints; whichever feed currently holds
+  // a given (year-month, law_cat) combination "wins" via mergeRowsMaxN.
+  const q = `SELECT date_trunc_ym(cmplnt_fr_dt) AS ym, law_cat_cd, count(*) AS n
+             WHERE (ofns_desc='FELONY ASSAULT' OR ofns_desc='ASSAULT 3 & RELATED OFFENSES')
+               AND date_extract_y(cmplnt_fr_dt) >= 2019
+             GROUP BY ym, law_cat_cd ORDER BY ym`;
+  const [hist, ytd] = await Promise.all([
+    soql(ENDPOINTS.historic, q).catch(() => []),
+    soql(ENDPOINTS.ytd, q).catch(() => []),
+  ]);
+  return mergeRowsMaxN([...hist, ...ytd], r => `${r.ym}|${r.law_cat_cd}`);
 }
 
 async function loadAnnual() {
-  const hist = await soql(ENDPOINTS.historic,
-    `SELECT date_extract_y(cmplnt_fr_dt) AS y, law_cat_cd, count(*) AS n
-     WHERE (ofns_desc='FELONY ASSAULT' OR ofns_desc='ASSAULT 3 & RELATED OFFENSES')
-       AND date_extract_y(cmplnt_fr_dt) >= 2006 AND date_extract_y(cmplnt_fr_dt) <= 2024
-     GROUP BY y, law_cat_cd ORDER BY y`);
-  const ytd = await soql(ENDPOINTS.ytd,
-    `SELECT date_extract_y(cmplnt_fr_dt) AS y, law_cat_cd, count(*) AS n
-     WHERE (ofns_desc='FELONY ASSAULT' OR ofns_desc='ASSAULT 3 & RELATED OFFENSES')
-       AND date_extract_y(cmplnt_fr_dt) >= 2025
-     GROUP BY y, law_cat_cd ORDER BY y`);
-  return [...hist, ...ytd];
+  const q = `SELECT date_extract_y(cmplnt_fr_dt) AS y, law_cat_cd, count(*) AS n
+             WHERE (ofns_desc='FELONY ASSAULT' OR ofns_desc='ASSAULT 3 & RELATED OFFENSES')
+               AND date_extract_y(cmplnt_fr_dt) >= 2006
+             GROUP BY y, law_cat_cd ORDER BY y`;
+  const [hist, ytd] = await Promise.all([
+    soql(ENDPOINTS.historic, q).catch(() => []),
+    soql(ENDPOINTS.ytd, q).catch(() => []),
+  ]);
+  return mergeRowsMaxN([...hist, ...ytd], r => `${r.y}|${r.law_cat_cd}`);
 }
 
 async function loadPrecinctYTD(year, endMonth) {
@@ -1661,11 +1673,18 @@ async function loadCompstat() {
 }
 
 async function loadBorough(year) {
-  return soql(ENDPOINTS.ytd,
-    `SELECT boro_nm, law_cat_cd, count(*) AS n
-     WHERE (ofns_desc='FELONY ASSAULT' OR ofns_desc='ASSAULT 3 & RELATED OFFENSES')
-       AND date_extract_y(cmplnt_fr_dt)=${year} AND boro_nm IS NOT NULL
-     GROUP BY boro_nm, law_cat_cd ORDER BY boro_nm`);
+  // Borough fallback (used only if CompStat is down). Either feed could be
+  // holding `year` after the quarterly rotation, so query both and pick the
+  // larger row count per (borough, law_cat_cd).
+  const q = `SELECT boro_nm, law_cat_cd, count(*) AS n
+             WHERE (ofns_desc='FELONY ASSAULT' OR ofns_desc='ASSAULT 3 & RELATED OFFENSES')
+               AND date_extract_y(cmplnt_fr_dt)=${year} AND boro_nm IS NOT NULL
+             GROUP BY boro_nm, law_cat_cd ORDER BY boro_nm`;
+  const [hist, ytd] = await Promise.all([
+    soql(ENDPOINTS.historic, q).catch(() => []),
+    soql(ENDPOINTS.ytd, q).catch(() => []),
+  ]);
+  return mergeRowsMaxN([...hist, ...ytd], r => `${r.boro_nm}|${r.law_cat_cd}`);
 }
 
 async function loadMeta() {
