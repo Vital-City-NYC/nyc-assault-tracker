@@ -1538,30 +1538,57 @@ function mergeRowsMaxN(rows, keyFn) {
   return Object.values(out);
 }
 
+// Pre-baked totals for years that don't change anymore. NYC Open Data's
+// live aggregation queries against the historic feed have become slow
+// (60+ seconds) since the 2025 rotation, presumably due to a cold cache
+// for multi-year date_extract_y() filters. Years before LIVE_FROM_YEAR
+// are read from these constants; the recent window is fetched live so
+// it stays current. Re-bake by running the per-year curl loop in
+// scripts/ when adding a new stable year.
+const LIVE_FROM_YEAR = 2024;
+const BAKED_MONTHLY = {"2019-01|F":1466,"2019-01|M":3908,"2019-02|F":1301,"2019-02|M":3633,"2019-03|F":1685,"2019-03|M":4231,"2019-04|F":1642,"2019-04|M":4285,"2019-05|F":1945,"2019-05|M":5081,"2019-06|F":1961,"2019-06|M":4920,"2019-07|F":2080,"2019-07|M":4959,"2019-08|F":1971,"2019-08|M":4442,"2019-09|F":1851,"2019-09|M":4584,"2019-10|F":1721,"2019-10|M":4376,"2019-11|F":1689,"2019-11|M":4112,"2019-12|F":1552,"2019-12|M":4085,"2020-01|F":1652,"2020-01|M":4041,"2020-02|F":1520,"2020-02|M":3984,"2020-03|F":1617,"2020-03|M":3614,"2020-04|F":1219,"2020-04|M":2567,"2020-05|F":1699,"2020-05|M":3471,"2020-06|F":2018,"2020-06|M":3677,"2020-07|F":2057,"2020-07|M":3870,"2020-08|F":2130,"2020-08|M":3879,"2020-09|F":1800,"2020-09|M":3621,"2020-10|F":1857,"2020-10|M":3789,"2020-11|F":1688,"2020-11|M":3568,"2020-12|F":1572,"2020-12|M":3355,"2021-01|F":1553,"2021-01|M":3111,"2021-02|F":1375,"2021-02|M":2935,"2021-03|F":1687,"2021-03|M":3650,"2021-04|F":1717,"2021-04|M":3512,"2021-05|F":2068,"2021-05|M":4211,"2021-06|F":2091,"2021-06|M":4293,"2021-07|F":2192,"2021-07|M":4538,"2021-08|F":2107,"2021-08|M":4409,"2021-09|F":2215,"2021-09|M":4539,"2021-10|F":2250,"2021-10|M":4674,"2021-11|F":1960,"2021-11|M":4330,"2021-12|F":1890,"2021-12|M":4194,"2022-01|F":1825,"2022-01|M":3950,"2022-02|F":1759,"2022-02|M":3934,"2022-03|F":2051,"2022-03|M":4685,"2022-04|F":2114,"2022-04|M":4625,"2022-05|F":2389,"2022-05|M":5052,"2022-06|F":2511,"2022-06|M":5234,"2022-07|F":2658,"2022-07|M":5121,"2022-08|F":2390,"2022-08|M":4665,"2022-09|F":2245,"2022-09|M":4493,"2022-10|F":2192,"2022-10|M":4746,"2022-11|F":2069,"2022-11|M":4333,"2022-12|F":2027,"2022-12|M":4139,"2023-01|F":2109,"2023-01|M":4522,"2023-02|F":1895,"2023-02|M":4002,"2023-03|F":2176,"2023-03|M":4672,"2023-04|F":2285,"2023-04|M":4689,"2023-05|F":2426,"2023-05|M":5345,"2023-06|F":2661,"2023-06|M":5193,"2023-07|F":2765,"2023-07|M":5239,"2023-08|F":2462,"2023-08|M":5018,"2023-09|F":2383,"2023-09|M":4867,"2023-10|F":2413,"2023-10|M":5180,"2023-11|F":2164,"2023-11|M":4762,"2023-12|F":2133,"2023-12|M":4879};
+const BAKED_ANNUAL = {"2006|F":17016,"2006|M":51519,"2007|F":17307,"2007|M":51042,"2008|F":16265,"2008|M":50237,"2009|F":16762,"2009|M":50164,"2010|F":17137,"2010|M":52670,"2011|F":18562,"2011|M":50874,"2012|F":19562,"2012|M":54506,"2013|F":20405,"2013|M":53556,"2014|F":20254,"2014|M":53798,"2015|F":20435,"2015|M":52249,"2016|F":20891,"2016|M":52369,"2017|F":20171,"2017|M":51460,"2018|F":20403,"2018|M":53067,"2019|F":20864,"2019|M":52616,"2020|F":20829,"2020|M":43436,"2021|F":23105,"2021|M":48396,"2022|F":26230,"2022|M":54977,"2023|F":27872,"2023|M":58368};
+
+function expandBaked(obj, fields) {
+  return Object.entries(obj).map(([key, n]) => {
+    const [k, c] = key.split('|');
+    const law_cat_cd = c === 'F' ? 'FELONY' : 'MISDEMEANOR';
+    const row = { law_cat_cd, n: String(n) };
+    row[fields.key] = fields.format ? fields.format(k) : k;
+    return row;
+  });
+}
+
 async function loadMonthly() {
-  // Pull the same range from both endpoints; whichever feed currently holds
-  // a given (year-month, law_cat) combination "wins" via mergeRowsMaxN.
+  // Baked rows for stable years; live query for LIVE_FROM_YEAR onward.
+  // Live range is small enough (2-3 years) that even the slow path stays
+  // under ~15s, vs. 60s+ for the full 2019- range.
+  const baked = expandBaked(BAKED_MONTHLY, {
+    key: 'ym',
+    format: ym => ym + '-01T00:00:00.000',
+  });
   const q = `SELECT date_trunc_ym(cmplnt_fr_dt) AS ym, law_cat_cd, count(*) AS n
              WHERE (ofns_desc='FELONY ASSAULT' OR ofns_desc='ASSAULT 3 & RELATED OFFENSES')
-               AND date_extract_y(cmplnt_fr_dt) >= 2019
+               AND date_extract_y(cmplnt_fr_dt) >= ${LIVE_FROM_YEAR}
              GROUP BY ym, law_cat_cd ORDER BY ym`;
   const [hist, ytd] = await Promise.all([
     soql(ENDPOINTS.historic, q).catch(() => []),
     soql(ENDPOINTS.ytd, q).catch(() => []),
   ]);
-  return mergeRowsMaxN([...hist, ...ytd], r => `${r.ym}|${r.law_cat_cd}`);
+  return mergeRowsMaxN([...baked, ...hist, ...ytd], r => `${r.ym}|${r.law_cat_cd}`);
 }
 
 async function loadAnnual() {
+  const baked = expandBaked(BAKED_ANNUAL, { key: 'y' });
   const q = `SELECT date_extract_y(cmplnt_fr_dt) AS y, law_cat_cd, count(*) AS n
              WHERE (ofns_desc='FELONY ASSAULT' OR ofns_desc='ASSAULT 3 & RELATED OFFENSES')
-               AND date_extract_y(cmplnt_fr_dt) >= 2006
+               AND date_extract_y(cmplnt_fr_dt) >= ${LIVE_FROM_YEAR}
              GROUP BY y, law_cat_cd ORDER BY y`;
   const [hist, ytd] = await Promise.all([
     soql(ENDPOINTS.historic, q).catch(() => []),
     soql(ENDPOINTS.ytd, q).catch(() => []),
   ]);
-  return mergeRowsMaxN([...hist, ...ytd], r => `${r.y}|${r.law_cat_cd}`);
+  return mergeRowsMaxN([...baked, ...hist, ...ytd], r => `${r.y}|${r.law_cat_cd}`);
 }
 
 async function loadPrecinctYTD(year, endMonth) {
