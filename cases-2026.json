@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "last_updated": "2026-09-21",
+  "last_updated": "2026-09-28",
   "note": "Compiled from NYC District Attorney press releases (Manhattan, Brooklyn, Bronx, Queens, Staten Island), federal prosecutor announcements, and reporting in NY Post, Daily News, NY Times, Gothamist, ABC7, NBC4, CBS2, Patch, and amNY. Entries are de-duplicated where a single defendant appears in multiple reports; the same defendant may appear on multiple dates when separate events (arrest, indictment, conviction) are reported. A small number of entries point to a DA press-release index rather than a case-specific permalink because the DA website's indexed permalinks could not be confirmed at compile time; readers can verify via the DA's dated press-release archive.",
   "cases": [
     {
@@ -1013,6 +1013,14 @@
     },
     {
       "n": 127,
+      "name": "Isaiah Thompson",
+      "date": "2026-07-06",
+      "borough": "Bronx",
+      "summary": "Isaiah Thompson, 30, was convicted of two counts of second-degree assault for slashing an MTA conductor in the face on June 10, 2025, at the Whitlock Avenue subway station on the #6 line. The attack occurred after the conductor made a routine announcement about closing doors, which Thompson took exception to; he was sentenced to six years in prison.",
+      "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/84-2026-Isaiah-Thompson-sentenced-for-assault.pdf"
+    },
+    {
+      "n": 128,
       "name": "Michael Foster",
       "date": "2026-07-13",
       "borough": "Bronx",
@@ -1020,7 +1028,7 @@
       "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/79-2026-Michael-Foster-Indicted-For-Killing-Niece.pdf"
     },
     {
-      "n": 128,
+      "n": 129,
       "name": "Theodore Tucker",
       "date": "2026-07-18",
       "borough": "Manhattan",
@@ -1028,7 +1036,7 @@
       "source_url": "https://manhattanda.org/d-a-bragg-announces-hate-crime-indictment-in-anti-gay-shooting-at-harlem-deli/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-announces-hate-crime-indictment-in-anti-gay-shooting-at-harlem-deli"
     },
     {
-      "n": 129,
+      "n": 130,
       "name": "Donovan Murphy",
       "date": "2026-07-28",
       "borough": "Manhattan",
@@ -1036,7 +1044,7 @@
       "source_url": "https://manhattanda.org/d-a-bragg-announces-prison-sentence-in-upper-east-side-apartment-rape/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-announces-prison-sentence-in-upper-east-side-apartment-rape"
     },
     {
-      "n": 130,
+      "n": 131,
       "name": "Shaleek Brunson",
       "date": "2026-07-28",
       "borough": "Queens",
@@ -1044,7 +1052,7 @@
       "source_url": "https://queensda.org/brooklyn-man-who-chased-woman-with-hammer-charged-with-assault/"
     },
     {
-      "n": 131,
+      "n": 132,
       "name": "Shaleek Brunson",
       "date": "2026-07-28",
       "borough": "Queens",
@@ -1052,7 +1060,7 @@
       "source_url": "https://queensda.org/brooklyn-man-who-chased-woman-with-hammer-indicted-for-assault/"
     },
     {
-      "n": 132,
+      "n": 133,
       "name": "60-year-old man from Queens Village (name withheld)",
       "date": "2026-07-29",
       "borough": "Queens",
@@ -1060,7 +1068,7 @@
       "source_url": "https://queensda.org/queens-village-man-sentenced-to-25-years-in-prison-for-raping-daughter/"
     },
     {
-      "n": 133,
+      "n": 134,
       "name": "Joseph Morros",
       "date": "2026-07-29",
       "borough": "Manhattan",
@@ -1068,7 +1076,7 @@
       "source_url": "https://manhattanda.org/statement-from-d-a-bragg-on-the-trial-conviction-of-joseph-morros/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=statement-from-d-a-bragg-on-the-trial-conviction-of-joseph-morros"
     },
     {
-      "n": 134,
+      "n": 135,
       "name": "Bretford Brewer",
       "date": "2026-07-31",
       "borough": "Queens",
@@ -1076,7 +1084,7 @@
       "source_url": "https://queensda.org/brooklyn-man-charged-for-fatal-stabbing-in-long-island-city-apartment-building/"
     },
     {
-      "n": 135,
+      "n": 136,
       "name": "Bretford Brewer",
       "date": "2026-07-31",
       "borough": "Queens",
@@ -1084,7 +1092,7 @@
       "source_url": "https://queensda.org/brooklyn-man-indicted-for-fatally-stabbing-long-island-city-resident/"
     },
     {
-      "n": 136,
+      "n": 137,
       "name": "Pedro Mercado",
       "date": "2026-08-06",
       "borough": "Bronx",
@@ -1092,7 +1100,7 @@
       "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/71-2026-Pedro-Mercado-sentenced-for-manslaughter.pdf"
     },
     {
-      "n": 137,
+      "n": 138,
       "name": "Curtis Brown",
       "date": "2026-08-11",
       "borough": "Manhattan",
@@ -1100,7 +1108,7 @@
       "source_url": "https://manhattanda.org/d-a-bragg-announces-trial-conviction-of-curtis-wise-brown-for-running-sex-trafficking-operation/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-announces-trial-conviction-of-curtis-wise-brown-for-running-sex-trafficking-operation"
     },
     {
-      "n": 138,
+      "n": 139,
       "name": "Michael Hosein",
       "date": "2026-08-13",
       "borough": "Brooklyn",
@@ -1108,7 +1116,7 @@
       "source_url": "https://www.brooklynda.org/2026/08/13/defendant-sentenced-to-19-years-to-life-in-prison-for-murder-of-girlfriend-in-bedford-stuyvesant-apartment/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=defendant-sentenced-to-19-years-to-life-in-prison-for-murder-of-girlfriend-in-bedford-stuyvesant-apartment"
     },
     {
-      "n": 139,
+      "n": 140,
       "name": "Larry Montes",
       "date": "2026-08-14",
       "borough": "Manhattan",
@@ -1116,7 +1124,7 @@
       "source_url": "https://manhattanda.org/d-a-bragg-announces-hate-crime-indictment-of-man-for-antisemitic-and-anti-black-attacks-at-central-synagogue/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-announces-hate-crime-indictment-of-man-for-antisemitic-and-anti-black-attacks-at-central-synagogue"
     },
     {
-      "n": 140,
+      "n": 141,
       "name": "Juan Mercedes",
       "date": "2026-08-17",
       "borough": "Manhattan",
@@ -1124,7 +1132,7 @@
       "source_url": "https://manhattanda.org/d-a-bragg-man-indicted-for-unprovoked-attack-on-tourists-at-midtown-mcdonalds/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-man-indicted-for-unprovoked-attack-on-tourists-at-midtown-mcdonalds"
     },
     {
-      "n": 141,
+      "n": 142,
       "name": "Francisco Garcia",
       "date": "2026-08-19",
       "borough": "Manhattan",
@@ -1132,7 +1140,15 @@
       "source_url": "https://manhattanda.org/d-a-bragg-announces-indictment-in-subway-shoving-of-72-year-old-man/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-announces-indictment-in-subway-shoving-of-72-year-old-man"
     },
     {
-      "n": 142,
+      "n": 143,
+      "name": "Jesus Acosta",
+      "date": "2026-08-22",
+      "borough": "Brooklyn",
+      "summary": "Jesus Acosta allegedly entered a Brownsville restaurant on August 22, 2026, and shot two employees during a botched robbery attempt, killing one man and wounding another in the leg. Acosta was arrested days later and indicted on first- and second-degree murder, attempted murder, and assault charges.",
+      "source_url": "https://www.brooklynda.org/2026/09/21/man-indicted-for-brownsville-restaurant-shooting-during-botched-robbery/"
+    },
+    {
+      "n": 144,
       "name": "Carlton Foster, Jaeandrea Herriot",
       "date": "2026-09-08",
       "borough": "Brooklyn",
@@ -1140,7 +1156,7 @@
       "source_url": "https://www.brooklynda.org/2026/09/08/brooklyn-man-indicted-for-alleged-sex-trafficking-of-teenager/"
     },
     {
-      "n": 143,
+      "n": 145,
       "name": "Tabitha Bundrick",
       "date": "2026-09-08",
       "borough": "Manhattan",
@@ -1148,7 +1164,7 @@
       "source_url": "https://manhattanda.org/d-a-bragg-announces-guilty-plea-in-triple-murder-fentanyl-drugging-and-robbery-pattern/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-announces-guilty-plea-in-triple-murder-fentanyl-drugging-and-robbery-pattern"
     },
     {
-      "n": 144,
+      "n": 146,
       "name": "Deanna DiCastro, Gilliam Cordero, Theresa Wright, Tasha Cruz, Joshua Henderson",
       "date": "2026-09-10",
       "borough": "Manhattan",
@@ -1156,7 +1172,7 @@
       "source_url": "https://manhattanda.org/d-a-bragg-announces-new-sex-trafficking-narcotics-charges-in-upstate-correctional-ring-prosecution/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-announces-new-sex-trafficking-narcotics-charges-in-upstate-correctional-ring-prosecution"
     },
     {
-      "n": 145,
+      "n": 147,
       "name": "Shirley Davis (AKA 'Peaches')",
       "date": "2026-09-11",
       "borough": "Bronx",
@@ -1164,13 +1180,21 @@
       "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/80-2026-Shirley-Davis-sentenced-for-Sex-Trafficking.pdf"
     },
     {
-      "n": 146,
+      "n": 148,
       "name": "Remington Yhap",
       "date": "2026-09-16",
       "borough": "Manhattan",
       "summary": "Manhattan therapist Remington Yhap, 47, was indicted for raping a teenage patient during a therapy session after a months-long course of sexual misconduct including sending explicit photos and videos. Yhap, who worked at Liberation Psychotherapy specializing in LGBTQ+ mental health, is charged with four counts of Rape in the Third Degree, five counts of Sexual Abuse in the Third Degree, and one count of Endangering the Welfare of a Child.",
       "source_url": "https://manhattanda.org/d-a-bragg-announces-indictment-of-therapist-remington-yhap-for-raping-teenage-patient/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-announces-indictment-of-therapist-remington-yhap-for-raping-teenage-patient"
+    },
+    {
+      "n": 149,
+      "name": "Marcus Collier",
+      "date": "2026-09-24",
+      "borough": "Brooklyn",
+      "summary": "Marcus Collier, 24, was sentenced to 32 1/3 years to life in prison for raping and robbing two women in separate gunpoint attacks in an East New York park in October and November 2021. He was convicted of predatory sexual assault, first-degree robbery, first-degree criminal sexual act, and first-degree rape. DNA evidence linked him conclusively to both sexual assaults.",
+      "source_url": "https://www.brooklynda.org/2026/09/25/man-sentenced-to-32-years-to-life-in-prison-for-raping-and-robbing-two-women-in-separate-attacks-at-gunpoint-in-east-new-york-park/"
     }
   ],
-  "last_scan_date": "2026-09-21"
+  "last_scan_date": "2026-09-28"
 }
