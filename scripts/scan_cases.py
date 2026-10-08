@@ -337,16 +337,22 @@ def classify_and_extract(client: Anthropic, release: Release, body: str) -> dict
         f"BODY:\n{body}"
     )
     try:
+        # Claude Haiku 5.5 thinks by default and thinking counts toward max_tokens,
+        # so run at low effort with room to spare; read only the text blocks.
         resp = client.messages.create(
-            model="claude-haiku-4-5",
-            max_tokens=500,
+            model="claude-haiku-5-5",
+            max_tokens=4096,
+            output_config={"effort": "low"},
             system=CLASSIFIER_PROMPT,
             messages=[{"role": "user", "content": user}],
         )
     except Exception as e:
         print(f"[haiku] API error for {release.url}: {e}", file=sys.stderr)
         return None
-    text = "".join(b.text for b in resp.content if hasattr(b, "text"))
+    if resp.stop_reason == "refusal":
+        print(f"[haiku] model declined {release.url}", file=sys.stderr)
+        return None
+    text = "".join(b.text for b in resp.content if b.type == "text")
     parsed = extract_json(text)
     if parsed is None:
         print(f"[haiku] unparseable response for {release.url}:\n{text[:300]}", file=sys.stderr)
