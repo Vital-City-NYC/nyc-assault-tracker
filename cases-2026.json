@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "last_updated": "2026-09-28",
+  "last_updated": "2026-10-12",
   "note": "Compiled from NYC District Attorney press releases (Manhattan, Brooklyn, Bronx, Queens, Staten Island), federal prosecutor announcements, and reporting in NY Post, Daily News, NY Times, Gothamist, ABC7, NBC4, CBS2, Patch, and amNY. Entries are de-duplicated where a single defendant appears in multiple reports; the same defendant may appear on multiple dates when separate events (arrest, indictment, conviction) are reported. A small number of entries point to a DA press-release index rather than a case-specific permalink because the DA website's indexed permalinks could not be confirmed at compile time; readers can verify via the DA's dated press-release archive.",
   "cases": [
     {
@@ -1181,6 +1181,14 @@
     },
     {
       "n": 148,
+      "name": "Ira Shane",
+      "date": "2026-09-15",
+      "borough": "Bronx",
+      "summary": "A Bronx man was sentenced to 12 years in prison after a jury convicted him of first-degree manslaughter for fatally stabbing Sergio Garcia during a street altercation on January 1, 2023, in front of 1335 College Avenue. Prosecutors said he also stabbed Garcia's partner during the same dispute.",
+      "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/82-2026-twelve-year-sentence-Ira-Shane.pdf"
+    },
+    {
+      "n": 149,
       "name": "Remington Yhap",
       "date": "2026-09-16",
       "borough": "Manhattan",
@@ -1188,13 +1196,77 @@
       "source_url": "https://manhattanda.org/d-a-bragg-announces-indictment-of-therapist-remington-yhap-for-raping-teenage-patient/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-announces-indictment-of-therapist-remington-yhap-for-raping-teenage-patient"
     },
     {
-      "n": 149,
+      "n": 150,
       "name": "Marcus Collier",
       "date": "2026-09-24",
       "borough": "Brooklyn",
       "summary": "Marcus Collier, 24, was sentenced to 32 1/3 years to life in prison for raping and robbing two women in separate gunpoint attacks in an East New York park in October and November 2021. He was convicted of predatory sexual assault, first-degree robbery, first-degree criminal sexual act, and first-degree rape. DNA evidence linked him conclusively to both sexual assaults.",
       "source_url": "https://www.brooklynda.org/2026/09/25/man-sentenced-to-32-years-to-life-in-prison-for-raping-and-robbing-two-women-in-separate-attacks-at-gunpoint-in-east-new-york-park/"
+    },
+    {
+      "n": 151,
+      "name": "Melissa Duran",
+      "date": "2026-09-26",
+      "borough": "Queens",
+      "summary": "Melissa Duran, 39, of Oakland Gardens, was arraigned on charges including attempted murder and assault after allegedly running at a 54-year-old man on his Bayside porch and slashing his face with a knife on September 24. The complaint also alleges she repeatedly damaged her mother's car in violation of an order of protection. The victim suffered a laceration from his temple to his ear and was treated at a hospital.",
+      "source_url": "https://queensda.org/oakland-gardens-woman-charged-with-attempted-murder-for-random-knife-attack-on-bayside-man/"
+    },
+    {
+      "n": 152,
+      "name": "Jeffrey Jorge",
+      "date": "2026-09-29",
+      "borough": "Bronx",
+      "summary": "Brooklyn resident Jeffrey Jorge, 37, was indicted on murder and related charges for allegedly stabbing two men multiple times without provocation on August 26, 2026, on Davidson Avenue in the Bronx. One victim, 33-year-old Rashaun Shettlewood, died of his injuries, and the other suffered non-life-threatening wounds.",
+      "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/86-2026-Jeffrey-Jorge-indicted-for-murder.pdf"
+    },
+    {
+      "n": 153,
+      "name": "Jesus Acosta, 31",
+      "date": "2026-09-29",
+      "borough": "Bronx",
+      "summary": "A Bronx man was indicted on first-degree murder and related charges for allegedly shooting and killing a customer inside a bodega at 143 East 149th Street on August 25, 2026. He allegedly fired at two other people behind the counter, then robbed the store and took an item from the victim's backpack while the victim was dying. He was arraigned September 29, 2026, and remanded.",
+      "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/85-2026-Jesus-Acosta-indicted-for-Murder.pdf"
+    },
+    {
+      "n": 154,
+      "name": "Bobby Gadsen",
+      "date": "2026-10-06",
+      "borough": "Queens",
+      "summary": "A 49-year-old Corona man was indicted on a six-count charge that includes second-degree assault and second-degree robbery. Prosecutors allege he pulled a cane-using 92-year-old man to the ground in Forest Hills on September 3 to steal his cellphone, injuring the victim's elbow. Police say he snatched another phone from a 51-year-old woman three days later and was arrested with that phone in his pocket.",
+      "source_url": "https://queensda.org/corona-man-charged-with-robbery-for-mugging-92-year-old/"
+    },
+    {
+      "n": 155,
+      "name": "Ryan Hemphill, 44",
+      "date": "2026-10-06",
+      "borough": "Manhattan",
+      "summary": "Attorney Ryan Hemphill, 44, was indicted on 41 counts, including predatory sexual assault, rape, aggravated sexual assault and second-degree assault, for allegedly raping a woman over seven hours in his midtown Manhattan apartment in spring 2024. Prosecutors allege he threatened the woman with a knife, burned her, fastened an electric shock collar on her and repeatedly held her head under water. He is presumed innocent unless proven guilty.",
+      "source_url": "https://manhattanda.org/d-a-bragg-announces-new-charges-against-attorney-ryan-hemphill-for-predatory-sexual-assault-of-7th-woman/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-announces-new-charges-against-attorney-ryan-hemphill-for-predatory-sexual-assault-of-7th-woman"
+    },
+    {
+      "n": 156,
+      "name": "Tabitha Bundrick",
+      "date": "2026-10-06",
+      "borough": "Manhattan",
+      "summary": "Tabitha Bundrick, 39, was sentenced to 27 years-to-life in state prison after pleading guilty to three counts of murder in the second degree and one count of assault in the second degree. Prosecutors said she gave four men fentanyl-laced drugs in Upper Manhattan between April 2023 and February 2024, then robbed them while they were unconscious, killing three.",
+      "source_url": "https://manhattanda.org/d-a-bragg-announces-prison-sentence-in-triple-murder-fentanyl-drugging-and-robbery-pattern/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-announces-prison-sentence-in-triple-murder-fentanyl-drugging-and-robbery-pattern"
+    },
+    {
+      "n": 157,
+      "name": "Tiliek Thompson",
+      "date": "2026-10-08",
+      "borough": "Manhattan",
+      "summary": "Tiliek Thompson, 41, was indicted for allegedly beating and strangling his girlfriend, Lovay Williams, 27, in their Washington Heights apartment in September 2026. He is charged with Murder in the Second Degree, Strangulation in the First Degree, and Attempted Assault in the Second Degree, among other counts. The charges are allegations, and the defendant is presumed innocent.",
+      "source_url": "https://manhattanda.org/d-a-bragg-announces-indictment-of-tiliek-thompson-for-murdering-lovay-williams/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=d-a-bragg-announces-indictment-of-tiliek-thompson-for-murdering-lovay-williams"
+    },
+    {
+      "n": 158,
+      "name": "Ashram Lochan, Jovan Young",
+      "date": "2026-10-09",
+      "borough": "Queens",
+      "summary": "Edgemere men Ashram Lochan, 32, and Jovan Young, 34, pleaded guilty to first-degree manslaughter over a June 2021 shooting that killed 10-year-old Justin Wallace and wounded Kyle Forrester in a dispute over a shared driveway. Prosecutors said Young fired into Forrester's home at Lochan's direction, and the pleas resolved indictments that included second-degree assault and attempted murder charges. Sentencing is scheduled for October 16 for Lochan and October 23 for Young.",
+      "source_url": "https://queensda.org/two-edgemere-men-plead-guilty-to-manslaughter-for-shooting-death-of-10-year-old-boy-in-dispute-over-shared-driveway/"
     }
   ],
-  "last_scan_date": "2026-09-28"
+  "last_scan_date": "2026-10-12"
 }
