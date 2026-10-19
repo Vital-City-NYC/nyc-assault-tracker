@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "last_updated": "2026-10-12",
+  "last_updated": "2026-10-19",
   "note": "Compiled from NYC District Attorney press releases (Manhattan, Brooklyn, Bronx, Queens, Staten Island), federal prosecutor announcements, and reporting in NY Post, Daily News, NY Times, Gothamist, ABC7, NBC4, CBS2, Patch, and amNY. Entries are de-duplicated where a single defendant appears in multiple reports; the same defendant may appear on multiple dates when separate events (arrest, indictment, conviction) are reported. A small number of entries point to a DA press-release index rather than a case-specific permalink because the DA website's indexed permalinks could not be confirmed at compile time; readers can verify via the DA's dated press-release archive.",
   "cases": [
     {
@@ -1266,7 +1266,31 @@
       "borough": "Queens",
       "summary": "Edgemere men Ashram Lochan, 32, and Jovan Young, 34, pleaded guilty to first-degree manslaughter over a June 2021 shooting that killed 10-year-old Justin Wallace and wounded Kyle Forrester in a dispute over a shared driveway. Prosecutors said Young fired into Forrester's home at Lochan's direction, and the pleas resolved indictments that included second-degree assault and attempted murder charges. Sentencing is scheduled for October 16 for Lochan and October 23 for Young.",
       "source_url": "https://queensda.org/two-edgemere-men-plead-guilty-to-manslaughter-for-shooting-death-of-10-year-old-boy-in-dispute-over-shared-driveway/"
+    },
+    {
+      "n": 159,
+      "name": "Elvin Rivera, 57",
+      "date": "2026-10-12",
+      "borough": "Queens",
+      "summary": "Elvin Rivera, 57, of Flushing, was charged with manslaughter, vehicular manslaughter and assault in the second degree after prosecutors say he ran a stop sign while impaired by cocaine and THC and struck a 1-year-old boy, Justin Hu, who was being pushed in a stroller by his nanny. The child was pronounced dead at a hospital, and the nanny was injured. Rivera is due back in court October 19.",
+      "source_url": "https://queensda.org/flushing-driver-charged-with-manslaughter-and-dwi-for-killing-baby-in-stroller/"
+    },
+    {
+      "n": 160,
+      "name": "Jason Reyes",
+      "date": "2026-10-13",
+      "borough": "Brooklyn",
+      "summary": "Jason Reyes, 37, was sentenced to 10 years in prison for punching a subway passenger on a Brooklyn-bound A train in October 2024 and then stomping on his head and face more than 30 times as the victim lay on the floor. The victim suffered a fractured orbital bone and nose, a traumatic brain injury, and bleeding in the brain. Reyes pleaded guilty to second-degree attempted murder.",
+      "source_url": "https://www.brooklynda.org/2026/10/13/brooklyn-man-sentenced-to-10-years-in-prison-for-punching-and-stomping-subway-passenger-on-a-train/"
+    },
+    {
+      "n": 161,
+      "name": "Sneider Mejia, D'Angelo Caraballo",
+      "date": "2026-10-14",
+      "borough": "Bronx",
+      "summary": "Two Bronx men were indicted on attempted murder and robbery charges for allegedly stabbing an off-duty NYPD detective ten times in the neck, arms and torso near East 208th Street and Rochambeau Avenue on October 2, 2026. The detective was taken to NYC Health + Hospitals/Jacobi and underwent emergency surgery. Prosecutors say the men were arrested in Massachusetts on October 7, 2026, and were arraigned and remanded.",
+      "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/89-2026-Defendants-Indicted-for-Attack-on-NYPD-Detective.pdf"
     }
   ],
-  "last_scan_date": "2026-10-12"
+  "last_scan_date": "2026-10-19"
 }
