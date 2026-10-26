@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "last_updated": "2026-10-19",
+  "last_updated": "2026-10-26",
   "note": "Compiled from NYC District Attorney press releases (Manhattan, Brooklyn, Bronx, Queens, Staten Island), federal prosecutor announcements, and reporting in NY Post, Daily News, NY Times, Gothamist, ABC7, NBC4, CBS2, Patch, and amNY. Entries are de-duplicated where a single defendant appears in multiple reports; the same defendant may appear on multiple dates when separate events (arrest, indictment, conviction) are reported. A small number of entries point to a DA press-release index rather than a case-specific permalink because the DA website's indexed permalinks could not be confirmed at compile time; readers can verify via the DA's dated press-release archive.",
   "cases": [
     {
@@ -1290,7 +1290,39 @@
       "borough": "Bronx",
       "summary": "Two Bronx men were indicted on attempted murder and robbery charges for allegedly stabbing an off-duty NYPD detective ten times in the neck, arms and torso near East 208th Street and Rochambeau Avenue on October 2, 2026. The detective was taken to NYC Health + Hospitals/Jacobi and underwent emergency surgery. Prosecutors say the men were arrested in Massachusetts on October 7, 2026, and were arraigned and remanded.",
       "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/89-2026-Defendants-Indicted-for-Attack-on-NYPD-Detective.pdf"
+    },
+    {
+      "n": 162,
+      "name": "Calvin Harris, Ymonzherae Gill",
+      "date": "2026-10-19",
+      "borough": "Bronx",
+      "summary": "A Bronx couple was indicted on second-degree murder, first-degree manslaughter, and assault charges in the death of their 3-year-old daughter, who died in March 2026 from neglect and malnutrition. Prosecutors also charged the parents with assault over the severe malnutrition of their son, who was hospitalized for a month. The Medical Examiner ruled the girl's death a homicide.",
+      "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/90-2026-Bronx-Couple-Indicted-In-Death-of-their-child.pdf"
+    },
+    {
+      "n": 163,
+      "name": "Miles Williams",
+      "date": "2026-10-21",
+      "borough": "Bronx",
+      "summary": "Rikers Island inmate Miles Williams, 25, was indicted on seven counts of second-degree assault and three counts of third-degree assault after allegedly attacking a Department of Correction captain and two officers with his fists and a hairbrush. The attack followed an attempt to search him on September 5, 2026, after he was seen concealing objects in his clothing. The victims suffered injuries that required hospital treatment, including stitches, staples, and a broken nose.",
+      "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/92-2026-Miles-Williams-Indicted-Rikers-Assault.pdf"
+    },
+    {
+      "n": 164,
+      "name": "16-year-old defendant (name withheld), Rafael Lopez, Daquan Coloma, Shaquan Coloma, 14-year-old defendant (name withheld)",
+      "date": "2026-10-22",
+      "borough": "Queens",
+      "summary": "Five alleged Trinitarios gang members were indicted on a 25-count charge over a two-day shooting spree in Corona in late August. Prosecutors say a 16-year-old fired at two teens on scooters on August 28, wounding a 13-year-old and a 16-year-old. The indictment also alleges retaliatory acts, including a brick thrown through an apartment window and a shot fired into a building vestibule.",
+      "source_url": "https://queensda.org/five-alleged-trinitarios-gang-members-indicted-for-violent-two-day-shooting-spree-in-corona/"
+    },
+    {
+      "n": 165,
+      "name": "Andrew Pashinin",
+      "date": "2026-10-23",
+      "borough": "Brooklyn",
+      "summary": "A Westchester man was sentenced to three and a half years in prison after a jury convicted him of first-degree attempted assault. Prosecutors said he followed a 33-year-old man on a Brooklyn subway platform in December 2024 and shoved him from behind onto the tracks, and the victim escaped seconds before a train entered the station.",
+      "source_url": "https://www.brooklynda.org/2026/10/23/westchester-man-sentenced-to-prison-for-pushing-stranger-onto-subway-tracks/"
     }
   ],
-  "last_scan_date": "2026-10-19"
+  "last_scan_date": "2026-10-26"
 }
