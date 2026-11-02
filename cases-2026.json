@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "last_updated": "2026-10-26",
+  "last_updated": "2026-11-02",
   "note": "Compiled from NYC District Attorney press releases (Manhattan, Brooklyn, Bronx, Queens, Staten Island), federal prosecutor announcements, and reporting in NY Post, Daily News, NY Times, Gothamist, ABC7, NBC4, CBS2, Patch, and amNY. Entries are de-duplicated where a single defendant appears in multiple reports; the same defendant may appear on multiple dates when separate events (arrest, indictment, conviction) are reported. A small number of entries point to a DA press-release index rather than a case-specific permalink because the DA website's indexed permalinks could not be confirmed at compile time; readers can verify via the DA's dated press-release archive.",
   "cases": [
     {
@@ -1322,7 +1322,15 @@
       "borough": "Brooklyn",
       "summary": "A Westchester man was sentenced to three and a half years in prison after a jury convicted him of first-degree attempted assault. Prosecutors said he followed a 33-year-old man on a Brooklyn subway platform in December 2024 and shoved him from behind onto the tracks, and the victim escaped seconds before a train entered the station.",
       "source_url": "https://www.brooklynda.org/2026/10/23/westchester-man-sentenced-to-prison-for-pushing-stranger-onto-subway-tracks/"
+    },
+    {
+      "n": 166,
+      "name": "Ashram Lochan, Jovan Young",
+      "date": "2026-10-30",
+      "borough": "Queens",
+      "summary": "Ashram Lochan was sentenced to 19 years in prison for directing Jovan Young to fire at a neighbor over a shared driveway dispute in Edgemere in June 2021. Young, who fired the shots, was sentenced to 24 years, and both pleaded guilty to first-degree manslaughter in satisfaction of indictments that included assault in the second degree. A 10-year-old boy, Justin Wallace, was fatally shot in the chest when he stood in the doorway, and a 29-year-old man was wounded.",
+      "source_url": "https://queensda.org/edgemere-man-sentenced-to-19-years-in-prison-for-fatal-shooting-of-10-year-old-boy-in-dispute-over-shared-driveway/"
     }
   ],
-  "last_scan_date": "2026-10-26"
+  "last_scan_date": "2026-11-02"
 }
