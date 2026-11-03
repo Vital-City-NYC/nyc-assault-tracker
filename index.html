@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NYC Assault Tracker — Live dashboard of felony and misdemeanor assault complaints</title>
-<meta name="description" content="A continuously updating dashboard of New York City felony and misdemeanor assault complaints, drawn from official NYPD data. Fully transparent methodology, current trendlines, and long-range baseline comparisons.">
+<meta name="description" content="A continuously updating dashboard of New York City felony and misdemeanor assault complaints, drawn from official NYPD data, with the full methodology, current trendlines, and long-range baseline comparisons.">
 <link rel="stylesheet" href="https://use.typekit.net/qqk2vto.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
@@ -1219,7 +1219,7 @@ table.data th.num { text-align: right; }
   <!-- Methodology -->
   <div class="methodology" id="section-method">
     <h2>How we did this</h2>
-    <p>This dashboard is built to be fully auditable. Every number on this page can be reproduced by replaying the queries below against the NYPD's public datasets.</p>
+    <p>Every number on this page can be reproduced by replaying the queries below against the NYPD's public datasets.</p>
 
     <h3>Data sources</h3>
     <ul>
@@ -1276,7 +1276,7 @@ table.data th.num { text-align: right; }
       <li><strong>Data revision lag.</strong> The Current (YTD) dataset is updated on a roughly quarterly cadence. The most recent three to six months of data will typically move upward slightly as late reports are filed and processed.</li>
       <li><strong>Methodology break at 2006.</strong> Pre-2006 totals come from NYPD's published annual tables; 2006 onward comes from complaint-level open data. The two match within a few percent but are not identical.</li>
       <li><strong>Trendline counts are citywide absolute numbers.</strong> They do not adjust for changes in the city's population. NYC's population grew from about 7.3 million in 1993 to about 8.3 million in 2024 (roughly 14 percent), so per-capita declines are somewhat steeper than raw count declines.</li>
-      <li><strong>Precinct rates use 2020 population only.</strong> The precinct map does not attempt to compare rates across years. Reliable precinct-level population between decennial censuses does not exist, and allocating estimates down to precinct boundaries would introduce error we cannot quantify honestly.</li>
+      <li><strong>Precinct rates use 2020 population only.</strong> The precinct map does not attempt to compare rates across years. Reliable precinct-level population between decennial censuses does not exist, and allocating estimates down to precinct boundaries would introduce error we cannot quantify.</li>
     </ul>
 
     <h3>Reproducing these numbers</h3>
