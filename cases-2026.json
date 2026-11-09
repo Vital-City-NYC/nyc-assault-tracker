@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "last_updated": "2026-11-02",
+  "last_updated": "2026-11-09",
   "note": "Compiled from NYC District Attorney press releases (Manhattan, Brooklyn, Bronx, Queens, Staten Island), federal prosecutor announcements, and reporting in NY Post, Daily News, NY Times, Gothamist, ABC7, NBC4, CBS2, Patch, and amNY. Entries are de-duplicated where a single defendant appears in multiple reports; the same defendant may appear on multiple dates when separate events (arrest, indictment, conviction) are reported. A small number of entries point to a DA press-release index rather than a case-specific permalink because the DA website's indexed permalinks could not be confirmed at compile time; readers can verify via the DA's dated press-release archive.",
   "cases": [
     {
@@ -1330,7 +1330,23 @@
       "borough": "Queens",
       "summary": "Ashram Lochan was sentenced to 19 years in prison for directing Jovan Young to fire at a neighbor over a shared driveway dispute in Edgemere in June 2021. Young, who fired the shots, was sentenced to 24 years, and both pleaded guilty to first-degree manslaughter in satisfaction of indictments that included assault in the second degree. A 10-year-old boy, Justin Wallace, was fatally shot in the chest when he stood in the doorway, and a 29-year-old man was wounded.",
       "source_url": "https://queensda.org/edgemere-man-sentenced-to-19-years-in-prison-for-fatal-shooting-of-10-year-old-boy-in-dispute-over-shared-driveway/"
+    },
+    {
+      "n": 167,
+      "name": "Christopher Joseph",
+      "date": "2026-11-04",
+      "borough": "Bronx",
+      "summary": "A 23-year-old Bronx man was sentenced to 8½ years in prison after pleading guilty to attempted second-degree murder. Prosecutors said he stabbed a woman about 20 times inside her East 225th Street apartment on March 22, 2025, while her daughter was in the next room. The victim was hospitalized for 48 days.",
+      "source_url": "https://www.bronxda.nyc.gov/downloads/pdf/pr/2026/97-2026-Christopher-Joseph-Sentenced.pdf"
+    },
+    {
+      "n": 168,
+      "name": "Elvin Rivera",
+      "date": "2026-11-06",
+      "borough": "Queens",
+      "summary": "Elvin Rivera, 57, of Flushing, was indicted on a 12-count charge including manslaughter, vehicular manslaughter and assault in the second degree. Prosecutors allege he drove a pickup while impaired by cocaine and THC, ran a stop sign on 32nd Avenue on October 11, and struck a 1-year-old boy in a stroller, who died.",
+      "source_url": "https://queensda.org/flushing-driver-indicted-on-manslaughter-and-dwi-charges-for-killing-baby-in-stroller/"
     }
   ],
-  "last_scan_date": "2026-11-02"
+  "last_scan_date": "2026-11-09"
 }
